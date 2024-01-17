@@ -12,7 +12,8 @@
 
 NAME		= bureaucrat
 
-CC			= c++
+#CC			= c++
+CC			= clang
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
 SRC			=	main.cpp \
