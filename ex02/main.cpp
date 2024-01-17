@@ -6,12 +6,13 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:51:16 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/16 22:50:16 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:50:22 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream> 
 #include "includes/Bureaucrat.hpp"
+#include "includes/ShrubberyCreationForm.hpp"
 #include "includes/Colors.hpp"
 
 
@@ -24,7 +25,10 @@ int main()
 	std::cout << "Form by default constructor:\n" << RESET;
 	try
 	{
-		Form form1;
+		ShrubberyCreationForm form1;
+		Bureaucrat johnny("Johnny", 3);
+		johnny.signForm(form1);
+		johnny.executeForm(form1);
 		std::cout << form1 << RESET;
 	}
 
