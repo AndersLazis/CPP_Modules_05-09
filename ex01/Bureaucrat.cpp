@@ -31,8 +31,8 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _Name(name), _Grade(grade)
 
 Bureaucrat::Bureaucrat(Bureaucrat const & source) : _Name(source._Name)
 {
-    std::cout << BG_GREEN << "Bureaucrat copy constructor was called" << RESET << std::endl;
-    *this = source;
+    _Grade = source._Grade;
+    std::cout << YELLOW << "Bureaucrat copy constructor was called \n" << RESET;
 }
 
 /*  ================*=  Destructor: =*================= */
@@ -121,3 +121,6 @@ void Bureaucrat::signForm(Form & form) const
         std::cerr << e.what() << '\n';
     }
 }
+
+
+

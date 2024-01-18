@@ -42,10 +42,10 @@ Form::Form(std::string name, int gradeToSign, int gradeToExecute) : _formName(na
 Form::Form(Form const & source) : _formName(source._formName),
                                     _gradeRequiredToSign(source._gradeRequiredToSign),
                                     _gradeRequiredToExecute(source._gradeRequiredToExecute),
-                                    _isSigned(_isSigned)
+                                    _isSigned(false)
 {
     std::cout << BG_YELLOW << "Form copy constructor was called"  << RESET << std::endl << RESET;
-   return;
+   *this = source;
 }
 
 /*  ================*=  Destructor: =*================= */
@@ -58,15 +58,9 @@ Form::~Form()
 /*  ===========*=  Overload "=" operator: =*=========== */
 
 Form & Form::operator=(Form const & source)
-{
-    std::cout << BG_YELLOW << "Form \"=\" operator overload was called"  << RESET << std::endl << RESET;
-    if(this != &source)
-    {
-        this->_isSigned = source._isSigned;
-        this->_gradeRequiredToExecute = source._gradeRequiredToExecute;
-        this->_gradeRequiredToSign = source._gradeRequiredToSign;        
-    }
-    
+{   if(this == &source)
+        return *this;
+    //nothing to assign in this class
     return *this;
 }
 
