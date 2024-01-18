@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:51:16 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/16 22:50:16 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/18 11:16:33 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 int main()
 {	
 	////////////////////////////////////////////////////////////////////////////////////////////////
-	//#1
-	std::cout << "\n\n============ #1 creation of form ============\n\n" << RESET;
-	std::cout << "Form by default constructor:\n" << RESET;
-	try
-	{
-		Form form1;
-		std::cout << form1 << RESET;
-	}
+	// //#1
+	// std::cout << "\n\n============ #1 creation of form ============\n\n" << RESET;
+	// std::cout << "Form by default constructor:\n" << RESET;
+	// try
+	// {
+	// 	Form form1;
+	// 	std::cout << form1 << RESET;
+	// }
 
 	// //#2
 	// std::cout << "Form by normal constructor:\n" << RESET;
@@ -44,7 +44,7 @@ int main()
 	// 	std::cout << formTooHigh << RESET;
 	// }
 
-	//#4
+	// #4
 	// std::cout << "\n Form copy constructor test \n" << RESET;	
 	// try
 	// {
@@ -53,15 +53,15 @@ int main()
 	// 	std::cout << newForm << RESET;
 	// }
 
-	//#5
-	// std::cout << "\n Form assignment operator test \n" << RESET;	
-	// try
-	// {
-	// 	Form source("Source", 110, 12);
-	// 	Form newForm("newForm", 1, 1);
-	// 	newForm = source;
-	// 	std::cout << newForm << RESET;
-	// }
+	#5
+	std::cout << "\n Form assignment operator test \n" << RESET;	
+	try
+	{
+		Form source("Source", 110, 12);
+		Form newForm("newForm", 1, 1);
+		newForm = source;
+		std::cout << newForm << RESET;
+	}
 
 	//#6
 	// std::cout << "\n Form sign test with OK/NOK grade\n" << RESET;

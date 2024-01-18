@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:15 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/16 14:36:10 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/18 11:13:35 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ private:
     std::string	const	_formName;
     int	const			_gradeRequiredToSign;
     int const			_gradeRequiredToExecute;
-	
-
+    bool				_isSigned;
     
 public:
 	
@@ -41,9 +40,7 @@ public:
     bool				getIsSigned() const;
     int					getGradeRequiredToSign() const;
     int					getGradeRequiredToExecute() const;
-	void				beSigned(Bureaucrat const & bureaucrat);
-
-	bool				_isSigned;
+	void				beSigned(Bureaucrat const & bureaucrat);	
         
     class GradeTooLowException : public std::exception
     {

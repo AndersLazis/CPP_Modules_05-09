@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:10 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/16 22:49:12 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/18 11:26:08 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ Form::Form() : _formName("default Form"),
 }
 /* Constructor with parameters */
 Form::Form(std::string name, int gradeToSign, int gradeToExecute) : _formName(name),                                                                                
-                                                                                _gradeRequiredToSign(gradeToSign),
-                                                                                _gradeRequiredToExecute(gradeToExecute),
-                                                                               _isSigned(false)
+                                                                    _gradeRequiredToSign(gradeToSign),
+                                                                    _gradeRequiredToExecute(gradeToExecute),
+                                                                    _isSigned(false)
 {
     if(gradeToSign > MIN_GRADE || gradeToExecute > MIN_GRADE)
         throw Form::GradeTooLowException();
@@ -42,7 +42,7 @@ Form::Form(std::string name, int gradeToSign, int gradeToExecute) : _formName(na
 Form::Form(Form const & source) : _formName(source._formName),
                                     _gradeRequiredToSign(source._gradeRequiredToSign),
                                     _gradeRequiredToExecute(source._gradeRequiredToExecute),
-                                    _isSigned(false)
+                                    _isSigned(_isSigned)
 {
     std::cout << BG_YELLOW << "Form copy constructor was called"  << RESET << std::endl << RESET;
    return;
@@ -60,7 +60,13 @@ Form::~Form()
 Form & Form::operator=(Form const & source)
 {
     std::cout << BG_YELLOW << "Form \"=\" operator overload was called"  << RESET << std::endl << RESET;
-    this->_isSigned = source._isSigned;
+    if(this != &source)
+    {
+        this->_isSigned = source._isSigned;
+        this->_gradeRequiredToExecute = source._gradeRequiredToExecute;
+        this->_gradeRequiredToSign = source._gradeRequiredToSign;        
+    }
+    
     return *this;
 }
 

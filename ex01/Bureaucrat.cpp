@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:10 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/16 14:12:56 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/18 10:51:24 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _Name(name), _Grade(grade)
     this->_checkGrade(_Grade);
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat const & source) 
+Bureaucrat::Bureaucrat(Bureaucrat const & source) : _Name(source._Name)
 {
     std::cout << BG_GREEN << "Bureaucrat copy constructor was called" << RESET << std::endl;
     *this = source;
@@ -49,7 +49,6 @@ Bureaucrat & Bureaucrat::operator=(Bureaucrat const & source)
     std::cout << YELLOW << "Bureaucrat \"=\" operator overload was called \n" << RESET;
     if(this != &source)
     {
-        this->_Name = source._Name;
         this->_Grade = source._Grade;
     }
     return *this;

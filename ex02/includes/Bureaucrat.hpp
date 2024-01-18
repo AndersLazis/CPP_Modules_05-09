@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:15 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/17 13:53:05 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/18 10:52:19 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class AForm;
 class Bureaucrat
 {
 private:
-    std::string _Name;
+    const std::string _Name;
     int _Grade;
 
     static int const _minGrade = 150;
