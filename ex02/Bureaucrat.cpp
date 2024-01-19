@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:10 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/18 10:53:13 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/18 10:51:24 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _Name(name), _Grade(grade)
 
 Bureaucrat::Bureaucrat(Bureaucrat const & source) : _Name(source._Name)
 {
-    std::cout << BG_GREEN << "Bureaucrat copy constructor was called" << RESET << std::endl;
-    *this = source;
+    _Grade = source._Grade;
+    std::cout << YELLOW << "Bureaucrat copy constructor was called \n" << RESET;
 }
 
 /*  ================*=  Destructor: =*================= */
@@ -110,7 +110,7 @@ const char* Bureaucrat::GradeTooLowException::what()const throw()
     return "Grade of bureaucrat is too low!";
 }
 
-void Bureaucrat::signForm(AForm & form) const
+void Bureaucrat::signForm(Form & form) const
 {
     try
     {
@@ -122,14 +122,5 @@ void Bureaucrat::signForm(AForm & form) const
     }
 }
 
-void Bureaucrat::executeForm(AForm & form) const
-{
-    try
-    {
-        form.execute(*this);
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-}
+
+

@@ -6,12 +6,12 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:15 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/17 13:50:07 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/19 13:59:35 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AFORM_HPP
-# define AFORM_HPP
+#ifndef FORM_HPP
+# define FORM_HPP
 
 #include <string>
 #include "Bureaucrat.hpp"
@@ -27,10 +27,6 @@ private:
     int	const			_gradeRequiredToSign;
     int const			_gradeRequiredToExecute;
     bool				_isSigned;
-	
-
-protected:
-    virtual void		beExecuted() const = 0;
     
 public:
 	
@@ -44,30 +40,25 @@ public:
     bool				getIsSigned() const;
     int					getGradeRequiredToSign() const;
     int					getGradeRequiredToExecute() const;
-    
-	void				beSigned(Bureaucrat const & bureaucrat);
-    void                execute(Bureaucrat const & bureaucrat) const;
-	
+	void				beSigned(Bureaucrat const & bureaucrat);	
+
+    virtual void execute(Bureaucrat const & executor) const = 0pwdpwd
+    ;
         
     class GradeTooLowException : public std::exception
     {
         public:
-            const char* what()const throw();            
+            virtual const char* what()const throw();            
     };
 	class GradeTooHighException : public std::exception
     {
         public:
-            const char* what()const throw();            
+           virtual const char* what()const throw();            
     };
 	class FormAlreadySignedException : public std::exception
     {
         public:
-            const char* what()const throw();            
-    };
-    class FormNotSignedException : public std::exception
-    {
-        public:
-            const char* what()const throw();            
+           virtual const char* what()const throw();            
     };
 };
 

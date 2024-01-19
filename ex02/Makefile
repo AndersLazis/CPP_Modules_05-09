@@ -6,20 +6,16 @@
 #    By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/03 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/01/17 13:48:52 by aputiev          ###   ########.fr        #
+#    Updated: 2024/01/16 14:08:14 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= bureaucrat
 
-#CC			= c++
-CC			= clang
+CC			= c++
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
-SRC			=	main.cpp \
-				Bureaucrat.cpp \
-				AForm.cpp \
-				ShrubberyCreationForm.cpp
+SRC			= main.cpp Bureaucrat.cpp Form.cpp
 OBJ			= $(SRC:.cpp=.o)
 OBJ_PATH	= ./objects/
 OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
