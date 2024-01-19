@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:15 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/19 13:59:35 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/19 22:52:47 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ public:
     int					getGradeRequiredToExecute() const;
 	void				beSigned(Bureaucrat const & bureaucrat);	
 
-    virtual void execute(Bureaucrat const & executor) const = 0pwdpwd
-    ;
+    virtual void execute(Bureaucrat const & executor) const = 0;
         
     class GradeTooLowException : public std::exception
     {
