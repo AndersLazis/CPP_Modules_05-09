@@ -6,22 +6,24 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 23:23:30 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/20 00:06:17 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/20 19:00:25 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <iomanip>
+#include <fstream>
 #include "includes/AForm.hpp"
 #include "includes/Colors.hpp"
+#include "includes/ShrubberyCreationForm.hpp"
+#include "includes/Bureaucrat.hpp"
 
 /*  ================*= Constructors =*================= */
 /* Default */
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm default", 145, 137),
                                                 _target("default")
 {
-    std::cout << BG_YELLOW << "ShrubberyCreationForm \"" << this->_formName << "\" with grade required to sign" << 
-        this->_gradeRequiredToSign << " and grade require to execute " << this->_gradeRequiredToExecute << "and target: " <<
+    std::cout << BG_YELLOW << "ShrubberyCreationForm: \"" << this->getFormName() << "\" with grade required to sign: " << 
+        this->getGradeRequiredToSign() << " and grade require to execute: " << this->getGradeRequiredToExecute() << "and target: " <<
          _target << " was created" << RESET << std::endl << RESET;
 }
 
@@ -29,24 +31,23 @@ ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm de
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm default", 145, 137),
                                                                     _target(target)
 {    
-    std::cout << BG_YELLOW << "ShrubberyCreationForm \"" << _formName << "\" with grade required to sign" << 
-        _gradeRequiredToSign << " and grade require to execute " << _gradeRequiredToExecute << << "and target: " << 
-        _target << " was created" << RESET << std::endl;
+    std::cout << BG_YELLOW << "ShrubberyCreationForm \"" << this->getFormName() << "\" with grade required to sign" << 
+        this->getGradeRequiredToSign() << " and grade require to execute " << this->getGradeRequiredToExecute() << "and target: " <<
+         _target << " was created"  << std::endl << RESET;
 }
 /* Copy constructor */
-ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & source) : AForm(_formName(source._formName),
-                                                                                     _gradeRequiredToSign(source._gradeRequiredToSign),
-                                                                                     _gradeRequiredToExecute(source._gradeRequiredToExecute),
-                                                                                    _isSigned(false))
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & source) : AForm(source.getFormName(),
+                                                                                     source.getGradeRequiredToSign(),
+                                                                                     source.getGradeRequiredToExecute())
 {   
     std::cout << BG_YELLOW << "ShrubberyCreationForm copy constructor was called"  << RESET << std::endl << RESET;
 }
 
 /*  ================*=  Destructor: =*================= */
 
-Form::~Form()
+ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-    std::cout << RESET << BG_RED << "ShrubberyCreationForm \"" << this->_formName << "\" was deleted" << RESET << std::endl << RESET ;
+    std::cout << RESET << BG_RED << "ShrubberyCreationForm \"" << this->getFormName() << "\" was deleted" << RESET << std::endl << RESET ;
 }
 
 /*  ===========*=  Overload "=" operator: =*=========== */
@@ -60,7 +61,7 @@ ShrubberyCreationForm & ShrubberyCreationForm::operator=(ShrubberyCreationForm c
 
 /*  ===========*=  Overload "<<" operator: =*=========== */
 
-std::ostream& operator<<(std::ostream& os, const Form& form)
+std::ostream& operator<<(std::ostream& os, const ShrubberyCreationForm& form)
 {
     os << RESET << BG_GREEN << "ShrubberyCreationForm  name: " << form.getFormName() << 
                         " ShrubberyCreationForm  is signed: " << form.getIsSigned() <<
@@ -79,31 +80,33 @@ std::string const ShrubberyCreationForm::getTarget() const
 
 
 // HERE IS 
-void ShrubberyCreationForm::execute(Bureaucrat const & executor)
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {   
-    
-    if (bureaucrat.getGrade() > this->_gradeRequiredToExecute)
+    std::cout << BG_YELLOW << "ShrubberyCreationForm \"" << this->getFormName() << "\" is being executed by " << executor.getName() << RESET << std::endl;
+    if (executor.getGrade() > this->getGradeRequiredToExecute())
         throw AForm::GradeTooLowException();
-    else if (!this->_isSigned)
+    else if (!this->getIsSigned())
         throw AForm::AFormUnsignedException();       
     else
     {
-        std::string pine = "       _-_\n
-                                /~~   ~~\\\n
-                              /~~         ~~\\\n
-                              {               }\n
-                              \\  _-     -_  /\n
-                               ~  \\\\ //  ~\n
-                              _- -   | | _- _\n
-                                _ -  | |   -_\n
-                                _ -  | |   -_\n
-                                _ -  | |   -_\n
-                                _ -  | |   -_\n 
-                                    // \\\\\n";
+        std::string pine = "      _-_\n";
+        pine +=            "   /~~   ~~\\\n";
+        pine +=            "/~~         ~~\\\n";
+        pine +=            "{               }\n";
+        pine +=            " \\  _-     -_  /\n";
+        pine +=            "  ~  \\\\ //  ~\n";
+        pine +=            " _- -  | | _- _\n";
+        pine +=            "   _ - | |   -_\n";
+        pine +=            "       | |     \n";
+        pine +=            "       | |     \n";
+        pine +=            "       | |     \n" ;
+        pine +=            "      // \\\\\n";
         std::ofstream pineFile((this->_target + "_shrubbery"), std::ios::app);
         if(!pineFile.is_open())
-        {
+        {   
+            std::cerr << "Error: file is not open" << RESET << std::endl;
             throw std::exception();
+            //throw std::runtime_error("Error: file is not open");
         }        
         else
         {

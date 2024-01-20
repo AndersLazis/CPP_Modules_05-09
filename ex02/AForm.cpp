@@ -22,8 +22,8 @@ AForm::AForm() : _formName("default Form"),
                 _gradeRequiredToExecute(MIN_GRADE),
                 _isSigned(false)
 {
-    std::cout << BG_YELLOW << "AForm \"" << _formName << "\" with grade required to sign" << 
-        _gradeRequiredToSign << " and grade require to execute " << _gradeRequiredToExecute << " was created" << RESET << std::endl << RESET;
+    std::cout << BG_YELLOW << "AForm: \"" << _formName << "\" with grade required to sign: " << 
+        _gradeRequiredToSign << " and grade require to execute: " << _gradeRequiredToExecute << " was created" << RESET << std::endl << RESET;
 }
 /* Constructor with parameters */
 AForm::AForm(std::string name, int gradeToSign, int gradeToExecute) : _formName(name),                                                                                
@@ -35,11 +35,11 @@ AForm::AForm(std::string name, int gradeToSign, int gradeToExecute) : _formName(
         throw AForm::GradeTooLowException();
     else if (gradeToSign < MAX_GRADE || gradeToExecute < MAX_GRADE)
         throw AForm::GradeTooHighException();
-    std::cout << BG_YELLOW << "AForm \"" << _formName << "\" with grade required to sign" << 
-        _gradeRequiredToSign << " and grade require to execute " << _gradeRequiredToExecute << " was created"  << RESET << std::endl << RESET;
+    std::cout << BG_YELLOW << "AForm: \"" << _formName << "\" with grade required to sign: " << 
+        _gradeRequiredToSign << " and grade require to execute: " << _gradeRequiredToExecute << " was created"  << RESET << std::endl << RESET;
 }
 /* Copy constructor */
-AForm::AForm(Form const & source) : _formName(source._formName),
+AForm::AForm(AForm const & source) : _formName(source._formName),
                                     _gradeRequiredToSign(source._gradeRequiredToSign),
                                     _gradeRequiredToExecute(source._gradeRequiredToExecute),
                                     _isSigned(false)
@@ -49,7 +49,7 @@ AForm::AForm(Form const & source) : _formName(source._formName),
 
 /*  ================*=  Destructor: =*================= */
 
-Form::~Form()
+AForm::~AForm()
 {
     std::cout << RESET << BG_RED << "AForm \"" << this->_formName << "\" was deleted" << RESET << std::endl << RESET ;
 }
@@ -65,33 +65,33 @@ AForm & AForm::operator=(AForm const & source)
 
 /*  ===========*=  Overload "<<" operator: =*=========== */
 
-std::ostream& operator<<(std::ostream& os, const Form& form)
+std::ostream& operator<<(std::ostream& os, const AForm& form)
 {
-    os << RESET << BG_GREEN << "AForm name: " << form.getFormName() << 
-                        " AForm is signed: " << form.getIsSigned() <<
-                        " AForm grade required to sign: " << form.getGradeRequiredToSign() << 
-                        " AForm grade required to execute: "<< form.getGradeRequiredToExecute() << RESET << std::endl << RESET;
+    os << BG_GREEN << "AForm name: " << form.getFormName() << 
+                        "; AForm is signed: " << form.getIsSigned() <<
+                        "; AForm grade required to sign: " << form.getGradeRequiredToSign() << 
+                        "; AForm grade required to execute: "<< form.getGradeRequiredToExecute() << RESET << std::endl << RESET;
     return os;
 }
 
 /*  =================*=  Methods: =*================= */
 
-std::string const Form::getFormName() const
+std::string const AForm::getFormName() const
 {
     return this->_formName;
 }
 
-bool Form::getIsSigned() const
+bool AForm::getIsSigned() const
 {
     return this->_isSigned;
 }
 
-int Form::getGradeRequiredToSign() const
+int AForm::getGradeRequiredToSign() const
 {
     return this->_gradeRequiredToSign;
 }
 
-int Form::getGradeRequiredToExecute() const
+int AForm::getGradeRequiredToExecute() const
 {
     return this->_gradeRequiredToExecute;
 }
@@ -116,7 +116,7 @@ const char* AForm::AFormUnsignedException::what()const throw()
     return "Error: AForm is unsigned!";
 }
 
-void Form::beSigned(Bureaucrat const & bureaucrat)
+void AForm::beSigned(Bureaucrat const & bureaucrat)
 {
     if (bureaucrat.getGrade() > this->_gradeRequiredToSign)
         throw AForm::GradeTooLowException();

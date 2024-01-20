@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:15 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/19 22:52:47 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/20 17:03:24 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ public:
         public:
            virtual const char* what()const throw();            
     };
-	class FormAlreadySignedException : public std::exception
+	class AFormAlreadySignedException : public std::exception
+    {
+        public:
+           virtual const char* what()const throw();            
+    };
+    class AFormUnsignedException : public std::exception
     {
         public:
            virtual const char* what()const throw();            

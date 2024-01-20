@@ -6,7 +6,7 @@
 #    By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/03 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/01/20 00:17:04 by aputiev          ###   ########.fr        #
+#    Updated: 2024/01/20 19:41:44 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,13 @@ NAME		= bureaucrat
 CC			= c++
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
-SRC			= main.cpp Bureaucrat.cpp AForm.cpp SchrubberyCreationForm.cpp
+SRC			=	main.cpp \
+				Bureaucrat.cpp \
+				AForm.cpp \
+				ShrubberyCreationForm.cpp \
+				RobotomyRequestForm.cpp \
+				PresidentialPardonForm.cpp
+				
 OBJ			= $(SRC:.cpp=.o)
 OBJ_PATH	= ./objects/
 OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))

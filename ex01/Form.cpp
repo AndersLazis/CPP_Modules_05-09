@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:53:10 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/18 11:26:08 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/01/19 23:13:21 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ Form::Form(Form const & source) : _formName(source._formName),
                                     _isSigned(false)
 {
     std::cout << BG_YELLOW << "Form copy constructor was called"  << RESET << std::endl << RESET;
-   *this = source;
+   //*this = source;
 }
 
 /*  ================*=  Destructor: =*================= */
