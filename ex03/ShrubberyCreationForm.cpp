@@ -22,32 +22,32 @@
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm default", 145, 137),
                                                 _target("default")
 {
-    std::cout << BG_YELLOW << "ShrubberyCreationForm: \"" << this->getFormName() << "\" with grade required to sign: " << 
+    std::cout << BG_PURPLE << "ShrubberyCreationForm: \"" << this->getFormName() << "\" with grade required to sign: " << 
         this->getGradeRequiredToSign() << " and grade require to execute: " << this->getGradeRequiredToExecute() << "and target: " <<
-         _target << " was created" << RESET << std::endl << RESET;
+         _target << " was created" << RESET << RESET << std::endl ;
 }
 
 /* Constructor with parameters */
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm default", 145, 137),
                                                                     _target(target)
 {    
-    std::cout << BG_YELLOW << "ShrubberyCreationForm \"" << this->getFormName() << "\" with grade required to sign" << 
+    std::cout << BG_PURPLE << "ShrubberyCreationForm \"" << this->getFormName() << "\" with grade required to sign" << 
         this->getGradeRequiredToSign() << " and grade require to execute " << this->getGradeRequiredToExecute() << "and target: " <<
-         _target << " was created"  << std::endl << RESET;
+         _target << " was created"  << RESET << std::endl ;
 }
 /* Copy constructor */
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & source) : AForm(source.getFormName(),
                                                                                      source.getGradeRequiredToSign(),
                                                                                      source.getGradeRequiredToExecute())
 {   
-    std::cout << BG_YELLOW << "ShrubberyCreationForm copy constructor was called"  << RESET << std::endl << RESET;
+    std::cout << BG_PURPLE << "ShrubberyCreationForm copy constructor was called"  << RESET << RESET << std::endl ;
 }
 
 /*  ================*=  Destructor: =*================= */
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-    std::cout << RESET << BG_RED << "ShrubberyCreationForm \"" << this->getFormName() << "\" was deleted" << RESET << std::endl << RESET ;
+    std::cout << RESET << BG_RED << "ShrubberyCreationForm \"" << this->getFormName() << "\" was deleted" << RESET << RESET << std::endl  ;
 }
 
 /*  ===========*=  Overload "=" operator: =*=========== */
@@ -67,7 +67,7 @@ std::ostream& operator<<(std::ostream& os, const ShrubberyCreationForm& form)
                         " ShrubberyCreationForm  is signed: " << form.getIsSigned() <<
                         " ShrubberyCreationForm  grade required to sign: " << form.getGradeRequiredToSign() << 
                         " ShrubberyCreationForm  grade required to execute: "<< form.getGradeRequiredToExecute() << 
-                        " ShrubberyCreationForm  target: "<< form.getTarget() << RESET << std::endl << RESET;
+                        " ShrubberyCreationForm  target: "<< form.getTarget() << RESET << RESET << std::endl ;
     return os;
 }
 
@@ -82,7 +82,7 @@ std::string const ShrubberyCreationForm::getTarget() const
 // HERE IS 
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {   
-    std::cout << BG_YELLOW << "ShrubberyCreationForm \"" << this->getFormName() << "\" is being executed by " << executor.getName() << RESET << std::endl;
+    std::cout << BG_PURPLE << "ShrubberyCreationForm \"" << this->getFormName() << "\" is being executed by " << executor.getName() << RESET << std::endl;
     if (executor.getGrade() > this->getGradeRequiredToExecute())
         throw AForm::GradeTooLowException();
     else if (!this->getIsSigned())
@@ -101,7 +101,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
         pine +=            "       | |     \n";
         pine +=            "       | |     \n" ;
         pine +=            "      // \\\\\n";
-        std::ofstream pineFile((this->_target + "_shrubbery"), std::ios::app);
+        std::ofstream pineFile((this->_target + "_shrubbery").c_str(), std::ios::app);
         if(!pineFile.is_open())
         {   
             std::cerr << "Error: file is not open" << RESET << std::endl;
@@ -112,6 +112,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
         {
             pineFile << pine;
             pineFile.close();
+            std::cout << GREEN << "<<< Pine has been plated in " << _target << " >>>" << RESET << std::endl;
         }    
     }
     return;

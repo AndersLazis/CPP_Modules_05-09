@@ -12,7 +12,7 @@
 
 NAME		= bureaucrat
 
-CC			= c++
+CC			= clang++
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
 SRC			=	main.cpp \
@@ -20,7 +20,8 @@ SRC			=	main.cpp \
 				AForm.cpp \
 				ShrubberyCreationForm.cpp \
 				RobotomyRequestForm.cpp \
-				PresidentialPardonForm.cpp
+				PresidentialPardonForm.cpp \
+				Intern.cpp
 				
 OBJ			= $(SRC:.cpp=.o)
 OBJ_PATH	= ./objects/

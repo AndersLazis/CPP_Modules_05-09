@@ -14,6 +14,9 @@
 #include <iomanip>
 #include "includes/Intern.hpp"
 #include "includes/Colors.hpp"
+#include "includes/ShrubberyCreationForm.hpp"
+#include "includes/RobotomyRequestForm.hpp"
+#include "includes/PresidentialPardonForm.hpp"
 
 /*  ================*= Constructors =*================= */
 
@@ -24,6 +27,8 @@ Intern::Intern()
 
 Intern::Intern(Intern const & source)
 {
+    if(this == &source)
+        return ;
     std::cout << YELLOW << "Intern copy constructor was called \n" << RESET;
 }
 
@@ -31,30 +36,58 @@ Intern::Intern(Intern const & source)
 
 Intern::~Intern()
 {
-    std::cout << RED << "Intern \"" << this->_Name << "\" was deleted\n" << RESET;
+    std::cout << RED << "Intern was deleted\n" << RESET;
 }
 
 /*  ===========*=  Overload "=" operator: =*=========== */
 
 Intern & Intern::operator=(Intern const & source)
 {
+    if(this == &source)
+        return *this;
     std::cout << YELLOW << "Intern \"=\" operator overload was called \n" << RESET;
     return *this;
 }
 
 /*  =================*=  Functions: =*================= */
 
-  AForm*   Intern::makeForm(const std::string formName, const std::string formTarget)
-{
-    try
-    {   
-        
-        std::cout << PURPLE << "Intern creates form :" << formName << " applied to " <<  formTarget << std::endl;
+    AForm* createFormSchrubbery(const std::string &formTarget)
+    {
+        return new ShrubberyCreationForm(formTarget);        
     }
     
-    catch(const std::exception& e)
+    AForm* createFormRobotomy(const std::string &formTarget)
     {
-        std::cerr << e.what() << '\n';
+        return new RobotomyRequestForm(formTarget);
     }
-}
 
+    AForm* createFormPresidential(const std::string &formTarget)
+    {
+        return new PresidentialPardonForm(formTarget);
+    }
+
+    AForm*   Intern::makeForm(const std::string formName, const std::string formTarget)
+    {
+        enum formType {SCHRUBBERY, ROBOTOMY, PARDON};
+           std::string formNames[4] = {"ShrubberyCreationForm", "RobotomyRequestForm", "PresidentialPardonForm", ""};
+            AForm* (*formPtr[4])(const std::string&);
+           // formPtr = createFormSchrubbery;
+            formPtr[SCHRUBBERY] = createFormSchrubbery;
+            formPtr[ROBOTOMY] = createFormRobotomy;
+            formPtr[PARDON] = createFormPresidential;
+                        
+            for (int i = 0; i < 4; ++i) 
+            {
+                if (formNames[i] == "")
+                {
+                    throw std::invalid_argument("Invalid form name");
+                    break;
+                }
+                if (formNames[i] == formName)
+                {
+                    std::cout << PURPLE << "Intern creates form : " << formNames[i] << " The form applied to: " <<  formTarget << std::endl;
+                    return formPtr[i](formTarget);
+                }
+            }
+        return NULL;
+    }

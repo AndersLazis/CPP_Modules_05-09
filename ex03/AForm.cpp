@@ -22,7 +22,7 @@ AForm::AForm() : _formName("default Form"),
                 _gradeRequiredToExecute(MIN_GRADE),
                 _isSigned(false)
 {
-    std::cout << BG_YELLOW << "AForm: \"" << _formName << "\" with grade required to sign: " << 
+    std::cout << BG_CYAN << "AForm: \"" << _formName << "\" with grade required to sign: " << 
         _gradeRequiredToSign << " and grade require to execute: " << _gradeRequiredToExecute << " was created" << RESET << std::endl << RESET;
 }
 /* Constructor with parameters */
@@ -35,7 +35,7 @@ AForm::AForm(std::string name, int gradeToSign, int gradeToExecute) : _formName(
         throw AForm::GradeTooLowException();
     else if (gradeToSign < MAX_GRADE || gradeToExecute < MAX_GRADE)
         throw AForm::GradeTooHighException();
-    std::cout << BG_YELLOW << "AForm: \"" << _formName << "\" with grade required to sign: " << 
+    std::cout << BG_CYAN << "AForm: \"" << _formName << "\" with grade required to sign: " << 
         _gradeRequiredToSign << " and grade require to execute: " << _gradeRequiredToExecute << " was created"  << RESET << std::endl << RESET;
 }
 /* Copy constructor */
@@ -44,7 +44,7 @@ AForm::AForm(AForm const & source) : _formName(source._formName),
                                     _gradeRequiredToExecute(source._gradeRequiredToExecute),
                                     _isSigned(false)
 {
-    std::cout << BG_YELLOW << "AForm copy constructor was called"  << RESET << std::endl << RESET;
+    std::cout << BG_CYAN << "AForm copy constructor was called"  << RESET << std::endl << RESET;
 }
 
 /*  ================*=  Destructor: =*================= */

@@ -24,7 +24,7 @@ RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm default"
 {
     std::cout << BG_YELLOW << "RobotomyRequestForm: \"" << this->getFormName() << "\" with grade required to sign: " << 
         this->getGradeRequiredToSign() << " and grade require to execute: " << this->getGradeRequiredToExecute() << "and target: " <<
-         _target << " was created" << RESET << std::endl << RESET;
+         _target << " was created" << RESET << std::endl;
 }
 
 /* Constructor with parameters */
@@ -33,14 +33,14 @@ RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRe
 {    
     std::cout << BG_YELLOW << "RobotomyRequestForm \"" << this->getFormName() << "\" with grade required to sign" << 
         this->getGradeRequiredToSign() << " and grade require to execute " << this->getGradeRequiredToExecute() << "and target: " <<
-         _target << " was created"  << std::endl << RESET;
+         _target << " was created" << RESET << std::endl;
 }
 /* Copy constructor */
 RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const & source) : AForm(source.getFormName(),
                                                                                      source.getGradeRequiredToSign(),
                                                                                      source.getGradeRequiredToExecute())
 {   
-    std::cout << BG_YELLOW << "RobotomyRequestForm copy constructor was called"  << RESET << std::endl << RESET;
+    std::cout << BG_YELLOW << "RobotomyRequestForm copy constructor was called"  << RESET << std::endl;
 }
 
 /*  ================*=  Destructor: =*================= */
@@ -90,12 +90,12 @@ void RobotomyRequestForm::execute(Bureaucrat const & executor) const
     else
     {   
         std::cout << GREEN << " <<<<< Drilling noize >>>>> \n" << RESET;
-        std::time_t currentTime = std::time(NULL);
+        time_t currentTime = time(NULL);
         int currentTimeInt = static_cast<int>(currentTime);
         if(currentTimeInt%2)
-            std::cout << GREEN << " <target>" << _target << "has been robotomized successfully \n" << RESET;
+            std::cout << GREEN << "<<< <target>" << _target << "has been robotomized successfully >>>\n" << RESET;
         else
-            std::cout << GREEN << " <target>" << _target << "has been not been robotomized. Robotomy failed. \n" << RESET;
+            std::cout << GREEN << "<<< <target>" << _target << "has been not been robotomized. Robotomy failed. >>>\n" << RESET;
     }
     return;
 }
