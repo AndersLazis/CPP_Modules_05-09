@@ -1,0 +1,5 @@
+#ifndef SCALARCONVERTER_HPP
+# define SCALARCONVERTER_HPP
+
+
+#endif
