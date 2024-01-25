@@ -6,7 +6,7 @@
 #    By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/20 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/01/20 19:41:44 by aputiev          ###   ########.fr        #
+#    Updated: 2024/01/25 20:52:04 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME		= scalarconverter
 CC			= clang++
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
-SRC			=	ScalarConverter.cpp
+SRC			=	main.cpp \
+				ScalarConverter.cpp
 				
 OBJ			= $(SRC:.cpp=.o)
 OBJ_PATH	= ./objects/

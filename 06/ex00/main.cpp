@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 20:58:39 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/25 20:58:42 by aputiev          ###   ########.fr       */
+/*   Created: 2024/01/25 20:52:14 by aputiev           #+#    #+#             */
+/*   Updated: 2024/01/25 20:53:02 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERTER_HPP
-# define SCALARCONVERTER_HPP
+#include "includes/ScalarConverter.hpp"
+#include <iostream>
 
-
-class ScalarConverter
+int main(int argc, char **argv)
 {
-private:
-    ScalarConverter();
-    ScalarConverter(const ScalarConverter &copy);
-    ScalarConverter &operator=(const ScalarConverter &copy);
-public:
-   
-    ~ScalarConverter();
-    static void convert(std::string const &literal);
-};
-
-#endif
+    if (argc != 2)
+    {
+        std::cout << "Wrong number of arguments" << std::endl;
+        return (1);
+    }
+    ScalarConverter::convert(argv[1]);
+    return (0);
+}
