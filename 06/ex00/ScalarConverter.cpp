@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:39:28 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/04 14:42:26 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/04 14:49:03 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void printNAN(std::string  &literal)
 
 void printChar(std::string  &literal)
 {   std::cout << GREEN << "  === printCHAR === " << RESET << std::endl;
-    std::cout << GREEN << "char: " << literal << RESET << std::endl;    
+    std::cout << GREEN << "char: \'" << literal << "\'" << RESET << std::endl;    
     std::cout << GREEN << "int: " << static_cast<int>(literal[0]) << RESET << std::endl;
     std::cout << GREEN << "float: " << static_cast<float>(literal[0]) << ".0f" << RESET << std::endl;
     std::cout << GREEN << "double: " << static_cast<double>(literal[0])  << ".0" << RESET << std::endl;       
@@ -130,7 +130,7 @@ void printInt(std::string  &literal)
 {   std::cout << GREEN << "  === printInt === " << std::endl;
     /* char */
     if((strtol(literal.c_str(), nullptr, 10)) > 32 && strtol(literal.c_str(), nullptr, 10) <= 127)    
-        std::cout << GREEN << "char: " <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << RESET << std::endl; 
+        std::cout << GREEN << "char: \'" <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << "\'" <<RESET << std::endl; 
     else if((strtol(literal.c_str(), nullptr, 10)) >=0 && strtol(literal.c_str(), nullptr, 10) <= 32) 
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
@@ -158,7 +158,7 @@ void printFloat(std::string &literal)
 {   std::cout << GREEN << "  === printFloat === " << std::endl;
     /* char */
      if((strtof(literal.c_str(), nullptr)) > 32 && strtof(literal.c_str(), nullptr) <= 127)    
-       std::cout << GREEN << "char: " <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << RESET << std::endl; 
+       std::cout << GREEN << "char: \'" <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << "\'" << RESET << std::endl; 
     else if((strtof(literal.c_str(), nullptr)) >=0 && strtof(literal.c_str(), nullptr) <= 32) 
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
@@ -202,7 +202,7 @@ void printDouble(std::string  &literal)
 {   std::cout << GREEN << "  === printDouble === " << std::endl;
     /* char */
     if((strtod(literal.c_str(), nullptr)) > 32 && strtod(literal.c_str(), nullptr) <= 127)    
-       std::cout << GREEN << "char: " <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << std::endl; 
+       std::cout << GREEN << "char: \'" <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << "\'" << std::endl; 
     else if((strtod(literal.c_str(), nullptr)) >=0 && strtod(literal.c_str(), nullptr) <= 32) 
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
@@ -250,8 +250,8 @@ void ScalarConverter::convert(std::string &literal)
     printPtr[INT] = printInt;
     printPtr[FLOAT] = printFloat;
     printPtr[DOUBLE] = printDouble;
-    printPtr[NOTANUMBER] = printNAN;//
-    printPtr[WRONGARG] = printImpossible;//
+    printPtr[NOTANUMBER] = printNAN;
+    printPtr[WRONGARG] = printImpossible;
             
     printPtr[defineType(literal)](literal);
     return;    
