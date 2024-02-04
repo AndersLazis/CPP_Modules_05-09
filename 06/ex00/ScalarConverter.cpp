@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:39:28 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/02 17:14:09 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/04 14:42:26 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int defineType(std::string &literal)
 {
     size_t length = literal.length();
     size_t dotPos = 0;
-   
+    bool nonzero = false;   
     size_t NumOfDots = 0;
+    
     std::cout << "  === defineType === " << RESET <<  std::endl;
     if(literal == "nan" || literal == "nanf" || literal == "+inf" || 
         literal == "+inff" || literal == "-inf" || literal == "-inff" || literal == "inf" || literal == "inff")
@@ -54,12 +55,16 @@ int defineType(std::string &literal)
     /* parsing */
     for (size_t i = 0; i < length; ++i)
     {   
+        if (literal[i] != '0' && literal[i] != '.' && literal[i] != '-' && literal[i] != '+')
+            nonzero = true;
         if ((literal[i] == '-' || literal[i] == '+') && i != 0)
             return (WRONGARG);
         else if (literal[i] == 'f' && ((i != length - 1) || i == dotPos+1))
-            return WRONGARG;
+            return WRONGARG;       
         else if (literal[i] == '.')
-        {
+        {   
+            if (nonzero == false && i > 1)
+                return WRONGARG;
             if (i == 0 || i == length - 1)
                 return WRONGARG;
             else
@@ -70,7 +75,7 @@ int defineType(std::string &literal)
                     return WRONGARG;
             }
         }
-        else if ((!isdigit(literal[i]) && literal[i]!='-')&& (literal[i] != 'f' && i != length - 1))  
+        else if ((!isdigit(literal[i]) && literal[i]!='-') && (literal[length - 1] != 'f'))  
             return WRONGARG;
     }
     if(NumOfDots == 0 && literal[length - 1] != 'f')
@@ -78,7 +83,7 @@ int defineType(std::string &literal)
     else if(NumOfDots == 1 && literal[length - 1] == 'f')
         return FLOAT;
     else if(NumOfDots == 1 && literal[length - 1] != 'f')
-        return DOUBLE;   
+        return DOUBLE; 
     else 
         return WRONGARG;
 }
@@ -168,20 +173,29 @@ void printFloat(std::string &literal)
     /* float */
     if((strtof(literal.c_str(), nullptr)) > FLT_MAX || strtof(literal.c_str(), nullptr) <= -FLT_MAX)
          std::cout << GREEN << "float: impossible" << RESET << std::endl;
+    else if (strtod(literal.c_str(), nullptr) < FLT_MIN && strtod(literal.c_str(), nullptr) > -FLT_MIN)
+        std::cout << GREEN << "float: 0.0f" << RESET << std::endl;
     else
     {
         std::cout << GREEN << "float: " << strtof(literal.c_str(), nullptr) ;
-        if(strtof(literal.c_str(), nullptr))%10 == 0))
+        if(((strtof(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtof(literal.c_str(), nullptr) == 0)
             std::cout << ".0f\n";
-        else
-            std::cout << "f\n";
+         else
+             std::cout << "f\n";
     }
 
     /* double */
     if((strtof(literal.c_str(), nullptr)) > FLT_MAX  || strtof(literal.c_str(), nullptr) <= -FLT_MAX)
-         std::cout << GREEN << "double: impossible" << RESET << std::endl;
-    else 
-        std::cout << GREEN << "double: " << static_cast<double>(strtof(literal.c_str(), nullptr)) << RESET << std::endl;
+         std::cout << GREEN << "double: impossible" ;
+    else if (strtod(literal.c_str(), nullptr) < DBL_MIN && strtod(literal.c_str(), nullptr) > -DBL_MIN)
+        std::cout << GREEN << "double: 0.0" << RESET << std::endl;
+    else
+    { 
+        std::cout << GREEN << "double: " << static_cast<double>(strtof(literal.c_str(), nullptr));
+        if(((strtof(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtof(literal.c_str(), nullptr) == 0)
+            std::cout << ".0";        
+    }
+    std::cout << RESET  << std::endl;
 }
 
 void printDouble(std::string  &literal)
@@ -193,6 +207,7 @@ void printDouble(std::string  &literal)
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
         std::cout << GREEN << "char: impossible" << RESET << std::endl;
+        
     /* int */      
     if((strtod(literal.c_str(), nullptr)) > INT_MAX || strtod(literal.c_str(), nullptr) <= INT_MIN)
          std::cout << GREEN << "int: impossible" << RESET << std::endl;
@@ -202,16 +217,30 @@ void printDouble(std::string  &literal)
     /* float */
     if((strtod(literal.c_str(), nullptr)) > FLT_MAX || strtod(literal.c_str(), nullptr) <= -FLT_MAX)
          std::cout << GREEN << "float: impossible" << RESET << std::endl;
-    else 
-        std::cout << GREEN << "float: " <<  static_cast<float>(strtod(literal.c_str(), nullptr)) << "f" << RESET <<  std::endl;
+    else if (strtod(literal.c_str(), nullptr) < FLT_MIN && strtod(literal.c_str(), nullptr) > -FLT_MIN)
+        std::cout << GREEN << "float: 0.0f" << RESET << std::endl;
+    else        
+    {
+        std::cout << GREEN << "float: " <<  static_cast<float>(strtod(literal.c_str(), nullptr));
+        if(((strtod(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtod(literal.c_str(), nullptr) == 0)
+            std::cout << ".0f\n";
+         else
+             std::cout << "f\n";
+    }
         
     /* double */
     if((strtod(literal.c_str(), nullptr)) > DBL_MAX || strtod(literal.c_str(), nullptr) <= -DBL_MAX)
          std::cout << GREEN << "double: impossible" << std::endl;
+    else if (strtod(literal.c_str(), nullptr) < DBL_MIN && strtod(literal.c_str(), nullptr) > -DBL_MIN)
+        std::cout << GREEN << "double: 0.0" << RESET << std::endl;
     else 
-        std::cout << GREEN << "double: " << strtod(literal.c_str(), nullptr) << RESET <<  std::endl;
+    { 
+        std::cout << GREEN << "double: " << static_cast<double>(strtod(literal.c_str(), nullptr));
+        if(((strtod(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtod(literal.c_str(), nullptr) == 0)
+            std::cout << ".0";        
+    }
+    std::cout << RESET  << std::endl;
 }
-
 
 void ScalarConverter::convert(std::string &literal)
 {
@@ -220,7 +249,7 @@ void ScalarConverter::convert(std::string &literal)
     printPtr[CHAR] = printChar;
     printPtr[INT] = printInt;
     printPtr[FLOAT] = printFloat;
-   printPtr[DOUBLE] = printDouble;
+    printPtr[DOUBLE] = printDouble;
     printPtr[NOTANUMBER] = printNAN;//
     printPtr[WRONGARG] = printImpossible;//
             
