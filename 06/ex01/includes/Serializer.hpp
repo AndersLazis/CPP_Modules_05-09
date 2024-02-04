@@ -13,10 +13,11 @@
 #ifndef SERIALIZER_HPP
 # define SERIALIZER_HPP
 #include <string>
-#include <cfloat>
 #include "Data.hpp"
 #include <iostream>
-#include <cstdlib>
+
+#include <stdint.h>
+
 
 # define GREEN	"\e[32m"
 # define RESET	"\e[0m"

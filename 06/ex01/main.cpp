@@ -12,7 +12,6 @@
 
 #include "includes/Serializer.hpp"
 #include "includes/Data.hpp"
-
 #include <iostream>
 
 int main()
