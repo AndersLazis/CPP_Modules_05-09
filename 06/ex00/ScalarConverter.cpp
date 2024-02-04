@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:39:28 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/04 16:31:49 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/04 20:56:35 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,24 +167,25 @@ void printFloat(std::string &literal)
         std::cout << GREEN << "char: impossible" << RESET << std::endl;
         
     /* int */        
-    if((strtol(literal.c_str(), NULL, 10)) > INT_MAX || strtol(literal.c_str(), NULL,10) <= INT_MIN)
+    if((strtof(literal.c_str(), NULL, 10)) > INT_MAX || strtof(literal.c_str(), NULL,10) <= INT_MIN)
          std::cout << GREEN << "int: impossible" << RESET << std::endl;
     else 
         std::cout << GREEN << "int: " << static_cast<int>(strtof(literal.c_str(), NULL)) << RESET << std::endl;
         
     /* float */
     if((strtof(literal.c_str(), NULL)) > FLT_MAX || strtof(literal.c_str(), NULL) <= -FLT_MAX)
-         std::cout << GREEN << "float: impossible" << RESET << std::endl;
+         std::cout << GREEN << "float: impossible";
     else if (strtof(literal.c_str(), NULL) < FLT_MIN && strtof(literal.c_str(), NULL) > -FLT_MIN)
-        std::cout << GREEN << "float: 0.0f" << RESET << std::endl;
+        std::cout << GREEN << "float: 0.0f";
     else
     {
         std::cout << GREEN << "float: " << strtof(literal.c_str(), NULL) ;
         if(((strtof(literal.c_str(), NULL)/strtol(literal.c_str(), NULL, 10)) == 1) || strtof(literal.c_str(), NULL) == 0)
-            std::cout << ".0f\n";
+            std::cout << ".0f";
          else
-             std::cout << "f\n";
+             std::cout << "f";
     }
+    std::cout << RESET << std::endl;
 
     /* double */
     if((strtof(literal.c_str(), NULL)) > FLT_MAX  || strtof(literal.c_str(), NULL) <= -FLT_MAX)
