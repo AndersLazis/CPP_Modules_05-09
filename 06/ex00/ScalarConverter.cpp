@@ -131,70 +131,70 @@ void printInt(std::string  &literal)
 {   
     std::cout << GREEN << "  === printInt === " << std::endl;
     /* char */
-    if((strtol(literal.c_str(), nullptr, 10)) > 32 && strtol(literal.c_str(), nullptr, 10) <= 127)    
-        std::cout << GREEN << "char: \'" <<  static_cast<char>(strtol(literal.c_str(), nullptr, 10)) << "\'" <<RESET << std::endl; 
-    else if((strtol(literal.c_str(), nullptr, 10)) >=0 && strtol(literal.c_str(), nullptr, 10) <= 32) 
+    if((strtol(literal.c_str(), NULL, 10)) > 32 && strtol(literal.c_str(), NULL, 10) <= 127)    
+        std::cout << GREEN << "char: \'" <<  static_cast<char>(strtol(literal.c_str(), NULL, 10)) << "\'" <<RESET << std::endl; 
+    else if((strtol(literal.c_str(), NULL, 10)) >=0 && strtol(literal.c_str(), NULL, 10) <= 32) 
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
         std::cout << GREEN << "char: impossible" << RESET << std::endl;        
     /* int */        
-    if((strtol(literal.c_str(), nullptr, 10)) > INT_MAX || strtol(literal.c_str(), nullptr, 10) <= INT_MIN)
+    if((strtol(literal.c_str(), NULL, 10)) > INT_MAX || strtol(literal.c_str(), NULL, 10) <= INT_MIN)
          std::cout << GREEN << "int: impossible" << RESET << std::endl;
     else 
-        std::cout << GREEN << "int: " << strtol(literal.c_str(), nullptr, 10) << RESET << std::endl;
+        std::cout << GREEN << "int: " << strtol(literal.c_str(), NULL, 10) << RESET << std::endl;
         
     /* float */
-    if((strtol(literal.c_str(), nullptr, 10)) > INT_MAX || strtol(literal.c_str(), nullptr, 10) <= INT_MIN)
+    if((strtol(literal.c_str(), NULL, 10)) > INT_MAX || strtol(literal.c_str(), NULL, 10) <= INT_MIN)
          std::cout << GREEN << "float: impossible" << RESET << std::endl;
     else 
-        std::cout << GREEN << "float: " << static_cast<float>(strtol(literal.c_str(), nullptr, 10)) << ".0f" << RESET << std::endl;
+        std::cout << GREEN << "float: " << static_cast<float>(strtol(literal.c_str(), NULL, 10)) << ".0f" << RESET << std::endl;
 
     /* double */
-   if((strtol(literal.c_str(), nullptr, 10)) > INT_MAX || strtol(literal.c_str(), nullptr, 10) <= INT_MIN)
+   if((strtol(literal.c_str(), NULL, 10)) > INT_MAX || strtol(literal.c_str(), NULL, 10) <= INT_MIN)
          std::cout << GREEN << "double: impossible" << RESET << std::endl;
     else 
-        std::cout << GREEN << "double: " << static_cast<double>(strtol(literal.c_str(), nullptr, 10)) << ".0" << RESET << std::endl;
+        std::cout << GREEN << "double: " << static_cast<double>(strtol(literal.c_str(), NULL, 10)) << ".0" << RESET << std::endl;
 }
 
 void printFloat(std::string &literal)
 {   std::cout << GREEN << "  === printFloat === " << std::endl;
     /* char */
-     if((strtof(literal.c_str(), nullptr)) > 32 && strtof(literal.c_str(), nullptr) <= 127)    
-       std::cout << GREEN << "char: \'" <<  static_cast<char>(strtof(literal.c_str(), nullptr)) << "\'" << RESET << std::endl; 
-    else if((strtof(literal.c_str(), nullptr)) >=0 && strtof(literal.c_str(), nullptr) <= 32) 
+     if((strtof(literal.c_str(), NULL)) > 32 && strtof(literal.c_str(), NULL) <= 127)    
+       std::cout << GREEN << "char: \'" <<  static_cast<char>(strtof(literal.c_str(), NULL)) << "\'" << RESET << std::endl; 
+    else if((strtof(literal.c_str(), NULL)) >=0 && strtof(literal.c_str(), NULL) <= 32) 
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
         std::cout << GREEN << "char: impossible" << RESET << std::endl;
         
     /* int */        
-    if((strtof(literal.c_str(), nullptr)) > INT_MAX || strtof(literal.c_str(), nullptr) <= INT_MIN)
+    if((strtol(literal.c_str(), NULL, 10)) > INT_MAX || strtol(literal.c_str(), NULL,10) <= INT_MIN)
          std::cout << GREEN << "int: impossible" << RESET << std::endl;
     else 
-        std::cout << GREEN << "int: " << static_cast<int>(strtof(literal.c_str(), nullptr)) << RESET << std::endl;
+        std::cout << GREEN << "int: " << static_cast<int>(strtof(literal.c_str(), NULL)) << RESET << std::endl;
         
     /* float */
-    if((strtof(literal.c_str(), nullptr)) > FLT_MAX || strtof(literal.c_str(), nullptr) <= -FLT_MAX)
+    if((strtof(literal.c_str(), NULL)) > FLT_MAX || strtof(literal.c_str(), NULL) <= -FLT_MAX)
          std::cout << GREEN << "float: impossible" << RESET << std::endl;
-    else if (strtof(literal.c_str(), nullptr) < FLT_MIN && strtof(literal.c_str(), nullptr) > -FLT_MIN)
+    else if (strtof(literal.c_str(), NULL) < FLT_MIN && strtof(literal.c_str(), NULL) > -FLT_MIN)
         std::cout << GREEN << "float: 0.0f" << RESET << std::endl;
     else
     {
-        std::cout << GREEN << "float: " << strtof(literal.c_str(), nullptr) ;
-        if(((strtof(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtof(literal.c_str(), nullptr) == 0)
+        std::cout << GREEN << "float: " << strtof(literal.c_str(), NULL) ;
+        if(((strtof(literal.c_str(), NULL)/strtol(literal.c_str(), NULL, 10)) == 1) || strtof(literal.c_str(), NULL) == 0)
             std::cout << ".0f\n";
          else
              std::cout << "f\n";
     }
 
     /* double */
-    if((strtof(literal.c_str(), nullptr)) > FLT_MAX  || strtof(literal.c_str(), nullptr) <= -FLT_MAX)
+    if((strtof(literal.c_str(), NULL)) > FLT_MAX  || strtof(literal.c_str(), NULL) <= -FLT_MAX)
          std::cout << GREEN << "double: impossible" ;
-    else if (strtof(literal.c_str(), nullptr) < DBL_MIN && strtof(literal.c_str(), nullptr) > -DBL_MIN)
+    else if (strtof(literal.c_str(), NULL) < DBL_MIN && strtof(literal.c_str(), NULL) > -DBL_MIN)
         std::cout << GREEN << "double: 0.0" << RESET << std::endl;
     else
     { 
-        std::cout << GREEN << "double: " << static_cast<double>(strtof(literal.c_str(), nullptr));
-        if(((strtof(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtof(literal.c_str(), nullptr) == 0)
+        std::cout << GREEN << "double: " << static_cast<double>(strtof(literal.c_str(), NULL));
+        if(((strtof(literal.c_str(), NULL)/strtol(literal.c_str(), NULL, 10)) == 1) || strtof(literal.c_str(), NULL) == 0)
             std::cout << ".0";        
     }
     std::cout << RESET  << std::endl;
@@ -203,42 +203,42 @@ void printFloat(std::string &literal)
 void printDouble(std::string  &literal)
 {   std::cout << GREEN << "  === printDouble === " << std::endl;
     /* char */
-    if((strtod(literal.c_str(), nullptr)) > 32 && strtod(literal.c_str(), nullptr) <= 127)    
-       std::cout << GREEN << "char: \'" <<  static_cast<char>(strtod(literal.c_str(), nullptr)) << "\'" << std::endl; 
-    else if((strtod(literal.c_str(), nullptr)) >=0 && strtod(literal.c_str(), nullptr) <= 32) 
+    if((strtod(literal.c_str(), NULL)) > 32 && strtod(literal.c_str(), NULL) <= 127)    
+       std::cout << GREEN << "char: \'" <<  static_cast<char>(strtod(literal.c_str(), NULL)) << "\'" << std::endl; 
+    else if((strtod(literal.c_str(), NULL)) >=0 && strtod(literal.c_str(), NULL) <= 32) 
         std::cout << GREEN << "char: Non displayable" << RESET << std::endl;
     else
         std::cout << GREEN << "char: impossible" << RESET << std::endl;
         
     /* int */      
-    if((strtod(literal.c_str(), nullptr)) > INT_MAX || strtod(literal.c_str(), nullptr) <= INT_MIN)
+    if((strtod(literal.c_str(), NULL)) > INT_MAX || strtod(literal.c_str(), NULL) <= INT_MIN)
          std::cout << GREEN << "int: impossible" << RESET << std::endl;
     else 
-        std::cout << GREEN << "int: " <<  static_cast<int>(strtod(literal.c_str(), nullptr)) << RESET << std::endl;
+        std::cout << GREEN << "int: " <<  static_cast<int>(strtod(literal.c_str(), NULL)) << RESET << std::endl;
         
     /* float */
-    if((strtod(literal.c_str(), nullptr)) > FLT_MAX || strtod(literal.c_str(), nullptr) <= -FLT_MAX)
+    if((strtod(literal.c_str(), NULL)) > FLT_MAX || strtod(literal.c_str(), NULL) <= -FLT_MAX)
          std::cout << GREEN << "float: impossible" << RESET << std::endl;
-    else if (strtod(literal.c_str(), nullptr) < FLT_MIN && strtod(literal.c_str(), nullptr) > -FLT_MIN)
+    else if (strtod(literal.c_str(), NULL) < FLT_MIN && strtod(literal.c_str(), NULL) > -FLT_MIN)
         std::cout << GREEN << "float: 0.0f" << RESET << std::endl;
     else        
     {
-        std::cout << GREEN << "float: " <<  static_cast<float>(strtod(literal.c_str(), nullptr));
-        if(((strtod(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtod(literal.c_str(), nullptr) == 0)
+        std::cout << GREEN << "float: " <<  static_cast<float>(strtod(literal.c_str(), NULL));
+        if(((strtod(literal.c_str(), NULL)/strtol(literal.c_str(), NULL, 10)) == 1) || strtod(literal.c_str(), NULL) == 0)
             std::cout << ".0f\n";
          else
              std::cout << "f\n";
     }
         
     /* double */
-    if((strtod(literal.c_str(), nullptr)) > DBL_MAX || strtod(literal.c_str(), nullptr) <= -DBL_MAX)
+    if((strtod(literal.c_str(), NULL)) > DBL_MAX || strtod(literal.c_str(), NULL) <= -DBL_MAX)
          std::cout << GREEN << "double: impossible" ;
-    else if (strtod(literal.c_str(), nullptr) < DBL_MIN && strtod(literal.c_str(), nullptr) > -DBL_MIN)
+    else if (strtod(literal.c_str(), NULL) < DBL_MIN && strtod(literal.c_str(), NULL) > -DBL_MIN)
         std::cout << GREEN << "double: 0.0";
     else 
     { 
-        std::cout << GREEN << "double: " << static_cast<double>(strtod(literal.c_str(), nullptr));
-        if(((strtod(literal.c_str(), nullptr)/strtol(literal.c_str(), nullptr, 10)) == 1) || strtod(literal.c_str(), nullptr) == 0)
+        std::cout << GREEN << "double: " << static_cast<double>(strtod(literal.c_str(), NULL));
+        if(((strtod(literal.c_str(), NULL)/strtol(literal.c_str(), NULL, 10)) == 1) || strtod(literal.c_str(), NULL) == 0)
             std::cout << ".0";        
     }
     std::cout << RESET  << std::endl;
