@@ -57,7 +57,7 @@ void identify(Base& p)
         std::cout << GREEN << "A" << RESET << std::endl;
         (void)ref;   
     }
-    catch(const std::bad_cast& e)
+    catch(std::exception & e)
     {
         try
         {
@@ -65,7 +65,7 @@ void identify(Base& p)
             std::cout << GREEN << "B" << RESET << std::endl;
             (void)ref; 
         }
-         catch(const std::bad_cast& e)
+         catch(std::exception & e)
         {
              try
             {
@@ -73,7 +73,7 @@ void identify(Base& p)
                 std::cout << GREEN << "C"  << RESET << std::endl;
                 (void)ref;
             }
-             catch(const std::bad_cast& e)
+             catch(std::exception & e)
             {
                 std::cout << "Unknown" << std::endl;
             }

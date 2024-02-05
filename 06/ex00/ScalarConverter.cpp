@@ -167,7 +167,7 @@ void printFloat(std::string &literal)
         std::cout << GREEN << "char: impossible" << RESET << std::endl;
         
     /* int */        
-    if((strtof(literal.c_str(), NULL, 10)) > INT_MAX || strtof(literal.c_str(), NULL,10) <= INT_MIN)
+    if((strtol(literal.c_str(), NULL,10)) > INT_MAX || strtol(literal.c_str(), NULL,10) <= INT_MIN)
          std::cout << GREEN << "int: impossible" << RESET << std::endl;
     else 
         std::cout << GREEN << "int: " << static_cast<int>(strtof(literal.c_str(), NULL)) << RESET << std::endl;
