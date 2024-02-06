@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:52:14 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/05 14:56:34 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/06 17:33:24 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int main()
         Base* ptr = generate();
         identify(ptr);
         identify(*ptr);
-        std::cout  << std::endl; 
+        std::cout  << std::endl;
+        if(ptr)
+            delete ptr;
     }
 
     // C* Cptr = new C;

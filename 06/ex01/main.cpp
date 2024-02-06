@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:52:14 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/04 21:41:31 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/06 17:36:06 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int main()
         uintptr_t serialized = Serializer::serialize(dataPtr);
         Data* deserialized = Serializer::deserialize(serialized);
         std::cout << "Deserialized: \t" << deserialized << "n: " << deserialized->n << "; s1: " << deserialized->s1 << std::endl << std::endl;
-        delete dataPtr;
+        if(dataPtr)
+            delete dataPtr;
     }
     catch(const std::exception& e)
     {
