@@ -1,30 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:05:39 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/08 21:13:57 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/09 22:08:40 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEMPLATE_HPP
-# define TEMPLATE_HPP
+#ifndef ARRAY_HPP
+# define ARRAY_HPP
 
 #include <iostream>
 #include <string>
 #include "Colors.hpp"
+#include <iomanip>
 
-template <typename T>
-
-void iter (T* arr, size_t size, void (*func)(T const &))
+template < typename T >
+class Array
 {
-    for (size_t i = 0; i < size; i++)
-    {
-        func(arr[i]);
-    }
-    return;
-}
+    public:
+		Array();
+		Array(unsigned int n);
+		Array(Array const &src);
+		~Array();
+
+		Array &			operator=( const Array &rhs );
+		T &				operator[](unsigned int index);		
+		unsigned int	size() const;
+
+		class wrongIndexException : public std::exception
+		{
+            public:
+                virtual const char *what () const throw()
+                {
+                    return "Index out of range";
+                }
+		};       
+
+    private:		
+		unsigned int	_size;
+        T *				_array;
+
+};
+
+#include "../Array.tpp"
 #endif
