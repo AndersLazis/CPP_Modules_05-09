@@ -12,6 +12,7 @@
 
 #include "includes/Array.hpp"
 #include <string>
+#include <cstdlib>
 
 int main(int ac, char **av)
 {   
@@ -20,7 +21,7 @@ int main(int ac, char **av)
         Array<int> a;
     else
     {
-        int n = std::stoi(av[1]);
+        int n = std::atol(av[1]);
         Array<int> b(n);
         std::cout << "size " << b.size() << std::endl;
         b[2] = 42;
@@ -31,6 +32,7 @@ int main(int ac, char **av)
         c[2] = 21;
         std::cout << "c[2] " << c[2] << std::endl;
         std::cout << "d[2] " << d[2] << std::endl;
+
     }
     
 
