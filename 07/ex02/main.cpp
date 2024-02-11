@@ -12,6 +12,7 @@
 
 #include "includes/Array.hpp"
 #include <string>
+#include <cstdlib>
 
 int main(int ac, char **av)
 {   
@@ -31,6 +32,7 @@ int main(int ac, char **av)
         c[2] = 21;
         std::cout << "c[2] " << c[2] << std::endl;
         std::cout << "d[2] " << d[2] << std::endl;
+
     }
     
 
