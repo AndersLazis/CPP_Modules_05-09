@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 23:23:30 by aputiev           #+#    #+#             */
-/*   Updated: 2024/01/20 19:52:58 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/11 18:56:44 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ PresidentialPardonForm::~PresidentialPardonForm()
 PresidentialPardonForm & PresidentialPardonForm::operator=(PresidentialPardonForm const & source)
 {   if(this == &source)
         return *this;
-    _target = source._target;
+    this->_target = source._target;
     return *this;
 }
 

@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:05:39 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/08 21:13:57 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/10 18:57:44 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 #include "Colors.hpp"
 
 template <typename T>
-
-void iter (T* arr, size_t size, void (*func)(T const &))
+void iter (const T* arr, size_t size, void (*func)( const T &))
 {
     for (size_t i = 0; i < size; i++)
     {
@@ -27,4 +26,16 @@ void iter (T* arr, size_t size, void (*func)(T const &))
     }
     return;
 }
+
+template <typename T>
+void iter (T* arr, size_t size, void (*func)(T&))
+{
+    for (size_t i = 0; i < size; i++)
+    {
+        func(arr[i]);
+    }
+    return;
+}
+
+
 #endif

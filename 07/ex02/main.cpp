@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:52:14 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/09 22:11:01 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/09 22:19:57 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int ac, char **av)
         Array<int> a;
     else
     {
-        int n = std::stoi(av[1]);
+        int n = std::atol(av[1]);
         Array<int> b(n);
         std::cout << "size " << b.size() << std::endl;
         b[2] = 42;

@@ -6,14 +6,14 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 20:52:14 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/09 11:06:53 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/10 18:58:01 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/iter.hpp"
 
-template <typename T>
-void iter (T* arr, size_t size, void (*f)(T const &));
+
+
 
 
 
@@ -54,6 +54,14 @@ void multiply( T const & x )
     return; 
 }
 
+template<typename T >
+void multiply( T & x )
+{ 
+    x = x*3;
+    std::cout << x << std::endl;
+    return; 
+}
+
 template <typename T>
 void prefix( T const & x )
 {
@@ -63,17 +71,19 @@ void prefix( T const & x )
 
 int main()
 {
-    int arr[] = { 0, 1, 2, 3, 4, 5, 6 };
-	std::string arr3[] = { "0", "1", "2", "3", "4" , "5", "6" };
-    my_class arr2[5];
-	std::cout << GREEN <<  "\nint array\n"<< RESET;	
-    iter(arr, 5, print);
-	std::cout<< GREEN <<  "\nmy_class array\n"<< RESET;	
-    iter(arr, 5, multiply);
-	std::cout << GREEN << "\nstring array\n"<< RESET;	
-    iter( arr2, 5, print);
-	std::cout << GREEN << "\nstring array with prefix\n" << RESET;	
-	iter( arr3, 5, prefix);
+    //int arr[] = { 0, 1, 2, 3, 4, 5, 6 };
+	 int arr2[] = { 0, 1, 2, 3, 4, 5, 6 };
+    //std::string arr3[] = { "0", "1", "2", "3", "4" , "5", "6" };
+    // my_class arr2[5];
+	// std::cout << GREEN <<  "\nint array\n"<< RESET;	
+    iter(arr2, 5, multiply);
+    
+	// std::cout<< GREEN <<  "\nmy_class array\n"<< RESET;	
+    // iter(arr, 5, multiply);
+	// std::cout << GREEN << "\nstring array\n"<< RESET;	
+    // iter( arr2, 5, print);
+	// std::cout << GREEN << "\nstring array with prefix\n" << RESET;	
+	// iter( arr3, 5, prefix);
     return 0; 
 }
 
