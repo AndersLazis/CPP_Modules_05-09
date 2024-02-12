@@ -6,11 +6,11 @@
 #    By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/20 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/02/11 13:46:59 by aputiev          ###   ########.fr        #
+#    Updated: 2024/02/12 14:44:31 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=array
+NAME		=easyfind
 
 CC			= c++
 CPP_FLAGS	= #-Wall # -Wextra -Werror -g -std=c++98

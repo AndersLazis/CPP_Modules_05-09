@@ -1,67 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/12 22:12:08 by aputiev           #+#    #+#             */
+/*   Updated: 2024/02/12 22:25:27 by aputiev          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
-#include <vector>
-#include <list>
 #include <iterator>
 #include <algorithm>
-
-
-template <typename T>
-void print(T & spisok)
-{
-    for (typename std::list<T>::const_iterator it = spisok.cbegin();
-     it != spisok.cend(); it++)
-        std::cout << *it << std::endl;
-}
-
-
-template <typename T>
-typename T::const_iterator easyfind(T & spisok, int num)
-{
-    typename T::const_iterator it = std::find(spisok.begin(), spisok.end(), num);
-    if(it != spisok.end())
-    {
-        std::cout << "found " << *it << std::endl;
-        return it;
-            
-    }
-    else
-    {
-        std::cout << "not found" << std::endl;
-        return it;
-    }
-}
+#include "includes/Easyfind.hpp"
+#include <vector>
+#include <list>
+#include <deque>
+#include <stack>
 
 int main(void) {
 
-    std::list<int> mylist;
-    std::vector<int> myvector;
-
-    myvector.push_back(1);
-    myvector.push_back(2);
-    myvector.push_back(3);
-    myvector.push_back(4);
+        int value_I_want_to_find = 3; // change this value to test 
+        
+    std::cout << YELLOW << "\n -------------- #1 VECTOR TEST  -------------- " << RESET << std::endl;
+        std::vector<int> myvector;
+        for (size_t i = 0; i < 8; i++)
+            myvector.push_back(i);
+        std::cout << PURPLE << "my vector contains: " << RESET << std::endl;
+        for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
+            std::cout << *it << " ";
+        std::cout << std::endl;
+        try
+        {
+            easyfind(myvector, value_I_want_to_find);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << RESET << '\n';
+        }
     
-    mylist.push_front(1);
-    mylist.push_back(2);
-    mylist.push_back(3);
-    mylist.push_back(4);
+    std::cout << YELLOW << "\n --------------- #2 LIST TEST  --------------- " << RESET << std::endl;
+        std::list<int> mylist;
+        for (size_t i = 0; i < 8; i++)
+            mylist.push_back(i);
+        std::cout << PURPLE << "my vector contains:" << RESET << std::endl;
+        for (std::list<int>::iterator it = mylist.begin(); it != mylist.end(); it++)
+            std::cout << *it << " ";
+        std::cout << std::endl;
+        try
+        {
+            easyfind(mylist, value_I_want_to_find);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << RESET << '\n';
+        }
+    
+    std::cout << YELLOW << "\n -------------- #3 DEQUE TEST  -------------- " << RESET << std::endl;
+        std::deque<int> mydeque;
+        for (size_t i = 0; i < 8; i++)
+            mydeque.push_back(i);
 
-
-    easyfind(mylist, 3);
-    easyfind(myvector, 3);
-       
-    // std::vector <int>::iterator itr = std::find(myvector.begin(), myvector.end(), 3);
-
-    // if(itr != myvector.end())
-    //     std::cout << "found " << *itr << std::endl;
-    // else
-    //     std::cout << "not found" << std::endl;
-
-
-    //std::cout << "size: " << mylist.size() << std::endl;
-    //print(mylist);
-    //std::cout << *it << std::endl;
+        std::cout << PURPLE << "my queue contains:" << RESET << std::endl;
+        for (std::deque<int>::iterator it = mydeque.begin(); it != mydeque.end(); it++)
+            std::cout << *it << " ";
+        std::cout << std::endl;
+        try
+        {
+            easyfind(mydeque, value_I_want_to_find);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << RESET << '\n';
+        }
     
     return 0;
 }
-
