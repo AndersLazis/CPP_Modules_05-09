@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 22:12:08 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/13 19:16:21 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/16 21:00:56 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ int main(void) {
         
 //std::cout << YELLOW << "\n -------------- #1  TEST  -------------- " << RESET << std::endl;
     
-    Span sp;
+    Span sp(3);
     try{
         sp.addNumber(3);
+        sp.addNumber(17);
+        sp.addNumber(9);
+       std::cout << sp;
+        std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
     }
     catch(const std::exception & e)
     {

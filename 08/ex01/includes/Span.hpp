@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:45:07 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/13 19:29:22 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/02/16 20:56:24 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <iterator>
 #include <algorithm>
 #include "Colors.hpp"
+#include <numeric> 
 
 
 class Span
@@ -34,11 +35,11 @@ public:
 
     Span & operator= (Span const & src);
     
-    std::vector<int> getSpan();
+    std::vector<int> getSpan() const;
 
     void addNumber(const int & num);
     int shortestSpan();
-    int longestSpan();
+    //int longestSpan();
 };
 
 std::ostream & operator<<(std::ostream &out, Span sp);
