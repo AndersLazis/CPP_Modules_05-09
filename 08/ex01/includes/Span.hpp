@@ -20,16 +20,19 @@
 #include <algorithm>
 #include "Colors.hpp"
 #include <numeric> 
+#include <climits>
 
 
 class Span
 {
 private:
-    const unsigned int _n;
-    std::vector<int> _vektor;
-public:
     Span();
-    Span(const unsigned int & n);
+    unsigned int _n;
+    std::vector<int> _vektor;
+
+public:
+    
+    Span(unsigned int n);
     Span( Span const &  src);
     ~Span();
 
@@ -38,8 +41,14 @@ public:
     std::vector<int> getSpan() const;
 
     void addNumber(const int & num);
+    void addManyNumbers(const unsigned int n, const int & num_min);
     int shortestSpan();
-    //int longestSpan();
+    int longestSpan();
+    class SpanTooSmallException: public std::exception
+    {
+        public:
+            virtual const char *what()const throw ();
+    };
 };
 
 std::ostream & operator<<(std::ostream &out, Span sp);
