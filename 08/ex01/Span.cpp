@@ -31,7 +31,8 @@ Span & Span::operator= (Span const & src)
 {
     if (this != &src)
     {   
-        _vektor = src.getSpan();       
+        _vektor = src._vektor;
+        _n = src._n;       
     }
     return *this;
 }
