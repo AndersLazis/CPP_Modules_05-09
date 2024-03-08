@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:30:03 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/16 21:06:12 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/03/08 12:42:56 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 
 Span::Span() : _n(0){}
 
-Span::Span(unsigned int n){
-
-    // if(n > 1000000)
-    //     throw std::out_of_range("Please, enter valid amount of numbers less than 100000");
-    // else
-    // {
-        _n= n;
-       // _vektor.reserve(n);
-    //}
+Span::Span(unsigned int n) : _n(n)
+{
+    // _vektor.reserve(n);
 }
 
 Span::~Span(){}
@@ -51,54 +45,23 @@ void Span::addNumber(const int & num)
 {
     if(_n == 0)
         throw SpanTooSmallException();
-    else if (_vektor.size() <= _n)
+    else if (_vektor.size() < _n)
         _vektor.push_back(num);
     else
         throw std::out_of_range("No space left");
 }
 
-void Span::addManyNumbers(const unsigned int qty, const int & num_min)
+void Span::addRange(itr begin, itr end)
 {
-    try
-    {    
-    if(qty < 2 )
-        throw std::out_of_range("Please, enter valid amount of more than 1");
-    else if (qty > UINT_MAX)
-        throw std::out_of_range("Please, enter valid amount of numbers less than UINT_MAX");
-    else if (qty > _n)
-        throw std::out_of_range("Please, enter valid amount of numbers less than the size of the span.");
-
-
-    if (num_min > INT_MAX)
-        throw std::out_of_range("Please, enter valid number less than INT_MAX");
-    else if (num_min < INT_MIN)
-        throw std::out_of_range("Please, enter valid number more than INT_MIN");
-    else if (num_min > INT_MAX || num_min < INT_MIN)
-        throw std::out_of_range("Please, enter valid number");
-    else if (num_min + qty > INT_MAX )
-    {
-        throw std::out_of_range("Please, enter valid number that  in limits of calculation");
-    }
-
-    if(qty >= _n)
+    if (this->_vektor.size() + std::distance(begin, end) > this->_n)
         throw std::out_of_range("No space left");
     else
-    {
-        for (long m = num_min; m <= qty; m++)
-        {   //std::cout << m << std::endl;
-            _vektor.push_back(m);
-        }
-    }
-    }
-        catch(const std::exception& e)
-    {
-        std::cerr << "Error: " << e.what() << '\n';
-    }
+        _vektor.insert(_vektor.end(), begin, end);
 }
 
 int Span::longestSpan()
 {   
-    if(_n < 2)
+    if(_n < 2 || _vektor.size() < 2)
         throw SpanTooSmallException();
     std::vector<int> diff(_vektor.size());
     sort(_vektor.begin(), _vektor.end());
@@ -109,7 +72,7 @@ int Span::longestSpan()
 
 int Span::shortestSpan()
 {
-    if(_n < 2)
+    if(_n < 2 || _vektor.size() < 2)
         throw SpanTooSmallException();
     std::vector<int> diff(_vektor.size());
     sort(_vektor.begin(), _vektor.end());
@@ -128,7 +91,7 @@ std::ostream & operator<<(std::ostream & out, Span sp)
 {
     std::vector<int> vektor = sp.getSpan();
     std::cout << BLUE << "Your span is: \n" << RESET;
-    for(std::vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+    for(std::vector<int>::iterator it = vektor.begin(); it != vektor.end(); it++)
     {
         out << *it << " ";
     }

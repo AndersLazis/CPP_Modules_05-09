@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aputiev <aputiev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:45:07 by aputiev           #+#    #+#             */
-/*   Updated: 2024/02/16 20:56:24 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/03/08 12:28:20 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@
 #include <numeric> 
 #include <climits>
 
+typedef std::vector<int>::iterator itr;
 
 class Span
 {
 private:
-    Span();
+   
     unsigned int _n;
     std::vector<int> _vektor;
 
 public:
-    
+     Span();
     Span(unsigned int n);
     Span( Span const &  src);
     ~Span();
@@ -41,7 +42,7 @@ public:
     std::vector<int> getSpan() const;
 
     void addNumber(const int & num);
-    void addManyNumbers(const unsigned int n, const int & num_min);
+    void addRange(itr begin, itr end);
     int shortestSpan();
     int longestSpan();
     class SpanTooSmallException: public std::exception
