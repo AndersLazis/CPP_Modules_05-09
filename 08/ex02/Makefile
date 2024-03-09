@@ -10,12 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=easyfind
+NAME		=MutantStack
 
 CC			= c++
 CPP_FLAGS	= -Wall  -Wextra -Werror -g -std=c++98
 
-SRC			=	main.cpp
+SRC			=	main.cpp 
 
 OBJ			= $(SRC:.cpp=.o)
 OBJ_PATH	= ./objects/
@@ -26,6 +26,7 @@ all: $(OBJ_PATH) $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CPP_FLAGS) $(OBJS) -o $@
+	./$(NAME)
 
 $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)

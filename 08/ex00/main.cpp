@@ -21,14 +21,15 @@
 
 int main(void) {
 
-        int value_I_want_to_find = 3; // change this value to test 
+       int value_I_want_to_find = 5; // change this value to test
         
     std::cout << YELLOW << "\n -------------- #1 VECTOR TEST  -------------- " << RESET << std::endl;
         std::vector<int> myvector;
+
         for (size_t i = 0; i < 8; i++)
             myvector.push_back(i);
         std::cout << PURPLE << "my vector contains: " << RESET << std::endl;
-        for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
+        for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
             std::cout << *it << " ";
         std::cout << std::endl;
         try
@@ -39,6 +40,7 @@ int main(void) {
         {
             std::cerr << RED << e.what() << RESET << '\n';
         }
+
     
     std::cout << YELLOW << "\n --------------- #2 LIST TEST  --------------- " << RESET << std::endl;
         std::list<int> mylist;

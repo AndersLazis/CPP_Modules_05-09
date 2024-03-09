@@ -30,42 +30,19 @@ spans:    3 3 2  6
 
 
 int main(void) {
-    //std::cout << YELLOW << "\n ---------------------- #1 SUBJECT TEST  ---------------------- " << RESET << std::endl;
-    // try
-    // {
-    //     Span sp(100000);
-    //     /* Add one by one */
-                
-    //     sp.addNumber(6);
-    //     sp.addNumber(3);
-    //     sp.addNumber(17);
-    //     sp.addNumber(9);
-    //     sp.addNumber(11);
-        
-    //    // std::cout << sp;
-    //     std::cout << GREEN << "Shortest span:\t[" << sp.shortestSpan() << "]" << RESET << std::endl;
-    //     std::cout << RED <<  "Longest span:\t[" << sp.longestSpan() << "]" << RESET <<  std::endl;
-    // }
-    // catch(const std::exception & e)
-    // {
-    //     std::cerr << e.what() << std::endl;
-    // }
-
-
-std::cout << YELLOW << "\n ---------------------- #2  TEST WITH RANGE ITERATORS ---------------------- " << RESET << std::endl;
+    std::cout << YELLOW << "\n ---------------------- #1 SUBJECT TEST  ---------------------- " << RESET << std::endl;
     try
     {
-        Span sp(10000);
-
-        /* Add on range */    
+        Span sp(100000);
+        /* Add one by one */
+                
+        sp.addNumber(6);
+        sp.addNumber(3);
+        sp.addNumber(17);
+        sp.addNumber(9);
+        sp.addNumber(11);
         
-        int qty = 10000;
-        std::vector<int> vec(qty);        
-        for (int i = 0; i < qty; i++)
-            vec[i] = i;
-            
-        sp.addRange(vec.begin(), vec.end());
-        std::cout << sp;
+       // std::cout << sp;
         std::cout << GREEN << "Shortest span:\t[" << sp.shortestSpan() << "]" << RESET << std::endl;
         std::cout << RED <<  "Longest span:\t[" << sp.longestSpan() << "]" << RESET <<  std::endl;
     }
@@ -73,5 +50,28 @@ std::cout << YELLOW << "\n ---------------------- #2  TEST WITH RANGE ITERATORS 
     {
         std::cerr << e.what() << std::endl;
     }
-    return 0;
+
+
+// std::cout << YELLOW << "\n ---------------------- #2  TEST WITH RANGE ITERATORS ---------------------- " << RESET << std::endl;
+//     try
+//     {
+//         Span sp(10000);
+
+//         /* Add on range */    
+        
+//         int qty = 10000;
+//         std::vector<int> vec(qty);        
+//         for (int i = 0; i < qty; i++)
+//             vec[i] = i;
+            
+//         sp.addRange(vec.begin(), vec.end());
+//         std::cout << sp;
+//         std::cout << GREEN << "Shortest span:\t[" << sp.shortestSpan() << "]" << RESET << std::endl;
+//         std::cout << RED <<  "Longest span:\t[" << sp.longestSpan() << "]" << RESET <<  std::endl;
+//     }
+//     catch(const std::exception & e)
+//     {
+//         std::cerr << e.what() << std::endl;
+//     }
+//     return 0;
 }
