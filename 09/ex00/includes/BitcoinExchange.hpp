@@ -17,6 +17,7 @@ class BitcoinExchange
 
         std::map<int, float> _database;
         bool _negative;
+        bool _error;
 
         BitcoinExchange();
         bool isFileExists(std::string &filename);  

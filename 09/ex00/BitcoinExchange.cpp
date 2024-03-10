@@ -1,6 +1,6 @@
 
 #include "includes/BitcoinExchange.hpp"
-
+#include <fcntl.h>
 /*
 $> ./btc
 Error: could not open file. $> ./btc input.txt
@@ -48,7 +48,8 @@ void BitcoinExchange::addToMap(std::string &date, float &float_num)
 
 bool BitcoinExchange::isDatabaseValid(std::string &filename)
 {   
-    std::fstream file(filename);
+    
+    std::fstream file(filename.c_str());
     std::string line;
 
     if(!file)
@@ -86,16 +87,9 @@ bool BitcoinExchange::isFileExists(std::string &filename)
 {
     std::ifstream database(filename.c_str());
     if(!database.good() || database.fail() || !database.is_open())
-    {
-        // database.close();
         return (false);
-    }
     if(database.peek() == std::ifstream::traits_type::eof()) 
-    {
-        // database.close(); 
         return (false);
-    }
-    // database.close(); 
     return (true);
 }
 
@@ -108,10 +102,10 @@ bool  BitcoinExchange::IsWordValid(std::string &word, int &i)
     switch (i)
     {
         case 0 :
-            if(!std::isdigit(word.at(0)) || !std::isdigit(word.at(1)) || !std::isdigit(word.at(2)) ||
-                !std::isdigit(word.at(3)) || word.at(4) != '-' || !std::isdigit(word.at(5)) ||
-                !std::isdigit(word.at(6)) || word.at(7) != '-' || !std::isdigit(word.at(8)) ||
-                !std::isdigit(word.at(9)) || word.length() != 10)
+            if(word.length() != 10 || !std::isdigit(word.at(0)) || !std::isdigit(word.at(1)) ||
+                !std::isdigit(word.at(2)) || !std::isdigit(word.at(3)) || word.at(4) != '-' || 
+                !std::isdigit(word.at(5)) || !std::isdigit(word.at(6)) || word.at(7) != '-' ||
+                !std::isdigit(word.at(8)) || !std::isdigit(word.at(9)))
             {   
                 std::cout << "Error: bad input => " << word << std::endl;
                 return (false);
@@ -136,13 +130,14 @@ bool  BitcoinExchange::IsWordValid(std::string &word, int &i)
             else if(float_num < 0)
                 _negative = true;                
             break;
-    } 
+    }
     return (true);
 }
 
 void BitcoinExchange::process(std::string &filename)
 {
-    std::fstream file(filename);
+    std::fstream file(filename.c_str());
+    _error = false;
     if(!file)
         throw std::runtime_error("Error: could not open file.\n");
     std::string line;
@@ -158,19 +153,21 @@ void BitcoinExchange::process(std::string &filename)
         while (ss >> word)
         {   //std::cout << word << std::endl;
             if(!IsWordValid(word, i))
-            {
-                return;
+            {   
+                _error = true;
+                //std::cout << "Error: baaad input => " << line << std::endl;
+                break;
             }
             i++;
         }
-        if(i!=3)
-            std::cout << "Error: missed value or \"|\"" << std::endl;
+        if(i != 3 && _error == false)
+            std::cout << "Error: bad input => " << std::endl;
         else if (_negative)
             std::cout << "Error: not a positive number." << std::endl;            
         else
             findAndPrint(line, word);
     }
-    file.close();
+    return;
 }
 
 void BitcoinExchange::findAndPrint(std::string &line, std::string &word)
@@ -183,9 +180,10 @@ void BitcoinExchange::findAndPrint(std::string &line, std::string &word)
     float float_num = 0;
     std::istringstream iss2(word);
 
-    if(month <1 || month > 12 || day < 1 || day > 31)
-    {
-        std::cout << "Error: bad input => " << date_int << std::endl;
+    if(year < 1990 || year > 2100 || month <1 || month > 12 || day < 1 || day > 31)
+    {   
+        if(!_error)
+            std::cout << "Error: invalid date input => " << line << std::endl;
         return;
     }
     iss2 >> float_num;
@@ -203,4 +201,3 @@ void BitcoinExchange::findAndPrint(std::string &line, std::string &word)
         std::cout << line << " => " << itr->second * float_num << std::endl;
     }
 }
-
