@@ -22,7 +22,7 @@ int main (int ac, char **av)
     try
     {   
         BitcoinExchange b(filename);
-       // b.process(char *av[1]);
+        b.process(filename);
     }
     catch(const std::exception& e)
     {

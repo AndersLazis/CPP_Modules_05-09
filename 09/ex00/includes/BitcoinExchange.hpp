@@ -10,25 +10,26 @@
 #define INPUT 0
 #define DATABASE 1
 
+
 class BitcoinExchange
 {
     private:
+
+        std::map<int, float> _database;
+        bool _negative;
+
         BitcoinExchange();
         bool isFileExists(std::string &filename);  
-        bool isInputValid(std::string &filename); 
-
-        //std::map<int, float> _database;
-        //_readLine();
-        //_processLine(std::string line);
+        //bool isInputValid(std::string &filename);
+        void addToMap(std::string &date, float &float_num);
+        bool IsWordValid(std::string &word, int &i);
+        bool isDatabaseValid(std::string &filename);
+        void findAndPrint(std::string &line, std::string &word);
 
     public:
         BitcoinExchange(std::string &filename);
-        ~BitcoinExchange();
-        bool IsLineValid(std::string &word, int &i);
-        bool isDatabaseValid(std::string &filename);
-       
-        
-        //process();
+        ~BitcoinExchange(); 
+        void process(std::string &filename);
 
 };
 
