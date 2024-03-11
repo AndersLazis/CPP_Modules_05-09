@@ -16,7 +16,6 @@ class BitcoinExchange
     private:
 
         std::map<int, float> _database;
-        bool _negative;
         bool _error;
 
         BitcoinExchange();

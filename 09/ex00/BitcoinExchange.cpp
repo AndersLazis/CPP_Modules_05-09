@@ -14,7 +14,9 @@ Error: too large a number. $>
 
 BitcoinExchange::BitcoinExchange(){}
 
-BitcoinExchange::BitcoinExchange(std::string &filename) : _negative(false)
+BitcoinExchange::~BitcoinExchange(){}
+
+BitcoinExchange::BitcoinExchange(std::string &filename) : _error(false)
 {   
     std::string database = "data.csv";
 
@@ -24,62 +26,6 @@ BitcoinExchange::BitcoinExchange(std::string &filename) : _negative(false)
         throw std::runtime_error("Error: could not open " + database + " file.\n");
     if(!isDatabaseValid(database))
         throw std::runtime_error("Error: " + database + " is invalid.\n"); 
-}
-
-BitcoinExchange::~BitcoinExchange()
-{}
-
-
-
-void BitcoinExchange::addToMap(std::string &date, float &float_num)
-{
-    std::istringstream iss(date);
-    int year, month, day;
-    char minus_sign;
-
-    iss >> year >> minus_sign >> month >> minus_sign >> day;
-    int date_int = year * 10000 + month * 100 + day;
-    //std::cout << "date_int: " << date_int << std::endl;
-    _database[date_int] = float_num;
-}
-
-
-
-
-bool BitcoinExchange::isDatabaseValid(std::string &filename)
-{   
-    
-    std::fstream file(filename.c_str());
-    std::string line;
-
-    if(!file)
-        throw std::runtime_error("Error: could not open database file.\n");
-    std::getline(file, line);
-    if(line != "date,exchange_rate")
-        throw std::runtime_error("Error: no 1st line in database.\n");
-    while (std::getline(file, line))
-    {
-        size_t pos = line.find(',');
-        if (pos == std::string::npos)
-            throw std::runtime_error("Error: no comma found.\n");
-        std::string date = line.substr(0, pos);
-        //std::cout << "date: " << date << std::endl;
-        if(!std::isdigit(date.at(0)) || !std::isdigit(date.at(1)) || !std::isdigit(date.at(2)) ||
-            !std::isdigit(date.at(3)) || date.at(4) != '-' || !std::isdigit(date.at(5)) ||
-            !std::isdigit(date.at(6)) || date.at(7) != '-' || !std::isdigit(date.at(8)) ||
-            !std::isdigit(date.at(9)) || date.length() != 10)
-            throw std::runtime_error("Error: bad date.\n");
-        std::string rate = line.substr(pos + 1);
-        float float_num;
-        std::istringstream iss(rate);
-        if(!(iss >> float_num))
-            throw std::runtime_error("Error: bad rate.\n");
-        addToMap(date, float_num);
-       //std::cout << "rate: " << rate << std::endl;
-     
-    }
-    file.close();
-    return (true);
 }
 
 
@@ -93,11 +39,109 @@ bool BitcoinExchange::isFileExists(std::string &filename)
     return (true);
 }
 
+
+bool BitcoinExchange::isDatabaseValid(std::string &filename)
+{   
+    
+    std::fstream file(filename.c_str());
+    std::string line;
+
+    if(!file)
+        throw std::runtime_error("Error: could not open database file.\n");
+
+    std::getline(file, line);
+    if(line != "date,exchange_rate")
+        throw std::runtime_error("Error: no 1st line in database.\n");
+
+    while (std::getline(file, line))
+    {
+        size_t pos = line.find(',');
+        if (pos == std::string::npos)
+            throw std::runtime_error("Error: no comma found.\n");
+        std::string date = line.substr(0, pos);
+        //std::cout << "date: " << date << std::endl;
+        if( date.length() != 10 || !std::isdigit(date.at(0)) || !std::isdigit(date.at(1)) || !std::isdigit(date.at(2)) ||
+            !std::isdigit(date.at(3)) || date.at(4) != '-' || !std::isdigit(date.at(5)) ||
+            !std::isdigit(date.at(6)) || date.at(7) != '-' || !std::isdigit(date.at(8)) ||
+            !std::isdigit(date.at(9)))
+            throw std::runtime_error("Error: bad date.\n");
+        std::string rate = line.substr(pos + 1);
+        int i = 0;
+        if(rate[i] == '0')
+        {   
+            while (rate[i] == '0')
+            {
+                if(isdigit(rate[++i]) && rate[i] != '0')
+                    throw std::runtime_error("Error: bad rate.\n");
+            }
+        }
+        float float_num;
+        std::istringstream iss(rate);
+        if(!(iss >> float_num) || float_num < 0)
+            throw std::runtime_error("Error: bad rate.\n");
+        addToMap(date, float_num);
+       //std::cout << "rate: " << rate << std::endl;
+     
+    }
+    return (true);
+}
+
+
+void BitcoinExchange::addToMap(std::string &date, float &float_num)
+{
+    std::istringstream iss(date);
+    int year, month, day;
+    char minus_sign;
+
+    iss >> year >> minus_sign >> month >> minus_sign >> day;
+    if(year < 1990 || year > 2100 || month <1 || month > 12 || day < 1 || day > 31 || float_num < 0)
+        throw std::runtime_error("Error: invalid input in database.csv.\n");
+    int date_int = year * 10000 + month * 100 + day;
+    //std::cout << "date_int: " << date_int << std::endl;
+    _database[date_int] = float_num;
+}
+
+
+void BitcoinExchange::process(std::string &filename)
+{
+    std::fstream file(filename.c_str());
+    
+    if(!file)
+        throw std::runtime_error("Error: could not open file.\n");
+    std::string line;
+    int i = 0;
+    std::getline(file, line);
+    if(line != "date | value")
+        throw std::runtime_error("Error: no 1st line in input file.\n");
+    while (std::getline(file, line))
+    {   _error = false;
+        std::istringstream iss(line);
+        std::string word;
+        i = 0;
+        while (iss >> word)
+        {   //std::cout << word << std::endl;
+            if(!IsWordValid(word, i))
+            {   
+                _error = true;
+                break;
+            }
+            i++;
+        }
+        if(i != 3 && _error == false)
+            std::cout << "Error: bad input => " << line << std::endl;         
+        else if(_error == false)
+            findAndPrint(line, word);
+    }
+    return;
+}
+
+
 bool  BitcoinExchange::IsWordValid(std::string &word, int &i)
 {
     //std::cout << "word: [" << i  << "]" << word << std::endl;
     float float_num = 0;
-    _negative = false;
+    std::istringstream iss(word);
+    
     //std::cout << "word: [" << i  << "]" << word << std::endl;
     switch (i)
     {
@@ -108,6 +152,14 @@ bool  BitcoinExchange::IsWordValid(std::string &word, int &i)
                 !std::isdigit(word.at(8)) || !std::isdigit(word.at(9)))
             {   
                 std::cout << "Error: bad input => " << word << std::endl;
+                return (false);
+            }
+            int year, month, day;
+            char minus_sign;
+            iss >> year >> minus_sign >> month >> minus_sign >> day;
+            if(year < 1990 || year > 2100 || month <1 || month > 12 || day < 1 || day > 31)
+            {
+                std::cout << "Error: invalid date input => " << word << std::endl;
                 return (false);
             }
             break;
@@ -122,53 +174,22 @@ bool  BitcoinExchange::IsWordValid(std::string &word, int &i)
                 std::cout << "Error: cannot convert => " + word << std::endl;
                 return (false);   
             }     
-            else if( (float_num > 1000))
+            else if((float_num > 1000))
             {    
                 std::cout << "Error: too large a number." << std::endl;
                 return (false);
             }
             else if(float_num < 0)
-                _negative = true;                
+            {
+                std::cout << "Error: not a positive number." << std::endl;
+                return (false); 
+            }   
             break;
     }
     return (true);
 }
 
-void BitcoinExchange::process(std::string &filename)
-{
-    std::fstream file(filename.c_str());
-    _error = false;
-    if(!file)
-        throw std::runtime_error("Error: could not open file.\n");
-    std::string line;
-    int i = 0;
-    std::getline(file, line);
-    if(line != "date | value")
-        throw std::runtime_error("Error: no 1st line in input file.\n");
-    while (std::getline(file, line))
-    {
-        std::istringstream ss(line);
-        std::string word;
-        i = 0;
-        while (ss >> word)
-        {   //std::cout << word << std::endl;
-            if(!IsWordValid(word, i))
-            {   
-                _error = true;
-                //std::cout << "Error: baaad input => " << line << std::endl;
-                break;
-            }
-            i++;
-        }
-        if(i != 3 && _error == false)
-            std::cout << "Error: bad input => " << std::endl;
-        else if (_negative)
-            std::cout << "Error: not a positive number." << std::endl;            
-        else
-            findAndPrint(line, word);
-    }
-    return;
-}
+
 
 void BitcoinExchange::findAndPrint(std::string &line, std::string &word)
 {
@@ -179,13 +200,6 @@ void BitcoinExchange::findAndPrint(std::string &line, std::string &word)
     int date_int = year * 10000 + month * 100 + day;
     float float_num = 0;
     std::istringstream iss2(word);
-
-    if(year < 1990 || year > 2100 || month <1 || month > 12 || day < 1 || day > 31)
-    {   
-        if(!_error)
-            std::cout << "Error: invalid date input => " << line << std::endl;
-        return;
-    }
     iss2 >> float_num;
 
     std::map<int, float>::const_iterator it = _database.find(date_int);
@@ -201,3 +215,5 @@ void BitcoinExchange::findAndPrint(std::string &line, std::string &word)
         std::cout << line << " => " << itr->second * float_num << std::endl;
     }
 }
+
+
