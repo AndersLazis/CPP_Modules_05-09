@@ -6,7 +6,7 @@
 #    By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/20 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/03/12 15:40:55 by aputiev          ###   ########.fr        #
+#    Updated: 2024/03/12 16:20:46 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
 
 
 all: $(OBJ_PATH) $(NAME)
-	./$(NAME) "1 -2 +"
 
 $(NAME): $(OBJS)
 	$(CC) $(CPP_FLAGS) $(OBJS) -o $@

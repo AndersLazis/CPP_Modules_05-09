@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:23:45 by aputiev           #+#    #+#             */
-/*   Updated: 2024/03/12 16:08:38 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:28:59 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ void RPN::process()
         if(space_pos == std::string::npos)
             break;
     }
-    std::cout << GREEN << "Result: " << _stack.top() << RESET << std::endl;
+    int result = _stack.top();
+    _stack.pop();
+    if(!_stack.empty())
+        throw std::runtime_error("Error: not enough operators for numbers.");
+    std::cout << GREEN << "Result: " << result << RESET << std::endl;
 }
 
 bool RPN::_isTokenValid(std::string const &token)
@@ -83,12 +87,10 @@ void RPN::_processToken(std::string &token)
     int number;
     int second_number;
     std::stringstream ss(token);
-    //std::cout << "_processToken " << token << "state " << _state << std::endl;
     switch (_state)
     {
         case NUMBER:            
             ss >> number;
-            //std::cout << "num " << number << std::endl;
             _stack.push(number);
             break;
         case OPERATOR:
@@ -98,8 +100,6 @@ void RPN::_processToken(std::string &token)
             _stack.pop();
             second_number = _stack.top();
             _stack.pop();
-            // std::cout << "num1 " << number << std::endl;
-            // std::cout << "num2 " << second_number << std::endl;
             if (token == "+")
                 _stack.push(second_number + number);
             else if (token == "-")
