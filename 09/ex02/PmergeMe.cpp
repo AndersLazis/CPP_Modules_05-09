@@ -2,18 +2,30 @@
 
 #include "includes/PmergeMe.hpp"
 
-PmergeMe::PmergeMe(){}
+PmergeMe::PmergeMe() {} 
 
 PmergeMe::~PmergeMe()
 {
-//     if(_array)
-//         delete [] _array;
+    if(_array)
+        delete [] _array;
+    if(_pairs)
+        delete _pairs;
+
+    _array = NULL;
+    _pairs = NULL;
  }
 
-PmergeMe::PmergeMe(int ac, char** av) 
+PmergeMe::PmergeMe(int ac, char** av) : _size(ac-1), _array(NULL), _straggler(0), _isStraggler(false), _pairs(NULL)
 {
-    _createArray(ac, av);
-    //_isArrayValid();
+    try
+    {
+        _createArray(av);
+    }
+    catch(const std::exception& e)
+    {   
+        this->~PmergeMe();
+        throw;
+    }
 }
 
 PmergeMe::PmergeMe(PmergeMe const & obj)
@@ -30,30 +42,44 @@ PmergeMe & PmergeMe::operator=(PmergeMe const & obj)
     return (*this);
 }
 
-void PmergeMe::_createArray(int ac, char** av)
+void PmergeMe::processVector()
+{   
+    //std::clock_t vectorStartTime = std::clock();
+    _createVector();    
+    _checkVectorForDuplicates();
+    _checkForStraggler();
+    if(!_isVectorSorted())
+        _sortVector();
+
+        
+    //std::clock_t vectorEndTime = std::clock();    
+}
+
+void PmergeMe::_createVector()
 {
-    _array = new int[ac-1];
-    long long int temp;
-    for (int i = 1; i < ac; i++)
-    {   
-        if(std::string(av[i]).empty())
-            throw std::invalid_argument("invalid argument. Argument is empty.");
-        for(int j = 0; av[i][j] != '\0'; j++)
-        {
-            if (!std::isdigit(av[i][j]))
-                throw std::invalid_argument("invalid argument. Argument is not a positive number: [" + std::string(av[i]) + "].");
-        }
-        temp = std::atol(av[i]);
-        if (temp > INT_MAX || temp < 0)
-            throw std::invalid_argument("invalid argument. Argument is out of limits: [" + std::string(av[i]) + "].");
-        _array[i-1] = temp;        
-    }
+    for(int i = 0; i < _size; i++)
+        _vektor.push_back(_array[i]);
     if(VERBOSE)
     {   
-        std::cout << CYAN << "[verbose] Input array: ";
-        for (int i = 0; i < ac-1; i++)
-            std::cout << _array[i] << " ";
-        std::cout << RESET << std::endl;
+        std::cout << CYAN << "[verbose] Input vector: \t[ ";
+        for (int i = 0; i < _size; i++)
+            std::cout << _vektor[i] << " ";
+        std::cout << "]" << RESET << std::endl;
     }
     delete [] _array;
+    _array = NULL;
+}
+
+void PmergeMe::_sortVector()
+{   
+    _createVectorOfPairs();
+    _sortVectorOfPairs();
+    
+    
+
+}
+
+void PmergeMe::_sortVectorOfPairs()
+{
+    
 }

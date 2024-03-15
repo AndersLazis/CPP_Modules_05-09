@@ -1,5 +1,4 @@
 
-
 #ifndef PMERGE_HPP
 # define PMERGE_HPP
 
@@ -7,7 +6,12 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <climits>
+#include <cstdlib>
+
+#include <ctime>
 #include "Colors.hpp"
+
 
 #define VERBOSE 1
 
@@ -15,11 +19,29 @@ class PmergeMe
 {
     private:          
         
-        int* _array;
+        long long   _size;
+        int*        _array;
+
+        /* Vector variables: */
+        int         _straggler;
+        bool        _isStraggler;
+        std::vector<std::pair<int, int> >* _pairs;
+
         std::vector<int> _vektor;        
         //std::list<int> _list;
         PmergeMe();
-        void _createArray(int ac, char** av);
+        void _createArray(char** av);
+
+
+
+    /* Vector methods: */
+        void _createVector();
+        void _checkVectorForDuplicates();
+        bool _isVectorSorted();
+        void _sortVector();
+        void _checkForStraggler();
+        void _createVectorOfPairs();
+        void _sortVectorOfPairs();
 
                 
     public:
@@ -27,7 +49,7 @@ class PmergeMe
         ~PmergeMe();
         PmergeMe(PmergeMe const & obj);
         PmergeMe & operator=(PmergeMe const & obj);
-       // void process();
+        void processVector();
        
         
 };

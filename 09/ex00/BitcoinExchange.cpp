@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:11:17 by aputiev           #+#    #+#             */
-/*   Updated: 2024/03/11 23:11:20 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/03/12 09:52:48 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,33 @@ bool BitcoinExchange::isDatabaseValid(std::string &filename)
             !std::isdigit(date.at(6)) || date.at(7) != '-' || !std::isdigit(date.at(8)) ||
             !std::isdigit(date.at(9)))
             throw std::runtime_error("Error: bad date.\n");
+            
         std::string rate = line.substr(pos + 1);
-        int i = 0;
+        long unsigned int i = 0;
         if(rate[i] == '0')
         {   
             while (rate[i] == '0')
             {
                 if(isdigit(rate[++i]) && rate[i] != '0')
-                    throw std::runtime_error("Error: bad rate.\n");
+                    throw std::runtime_error("Error: bad rate. Wrong 0 position \n");
             }
+        }
+        int dotCount = 0;
+        for(i = 0; i < rate.length(); i++)
+        {   
+            if(rate[i] == '.')
+                dotCount++;
+            if((!isdigit(rate[i]) && rate[i] != '.') || dotCount > 1)
+            {
+                std::cout << "Error: bad rate => " << rate;
+                throw std::runtime_error("");             
+            }
+                   
         }
         float float_num;
         std::istringstream iss(rate);
         if(!(iss >> float_num) || float_num < 0)
-            throw std::runtime_error("Error: bad rate.\n");
+            throw std::runtime_error("Error: bad rate. Cannot convert to number\n");
         addToMap(date, float_num);
        //std::cout << "rate: " << rate << std::endl;
      
@@ -106,7 +119,7 @@ void BitcoinExchange::addToMap(std::string &date, float &float_num)
 
     iss >> year >> minus_sign >> month >> minus_sign >> day;
     if(year < 1990 || year > 2100 || month <1 || month > 12 || day < 1 || day > 31 || float_num < 0)
-        throw std::runtime_error("Error: invalid input in database.csv.\n");
+        throw std::runtime_error("Error: invalid date input in database.csv.\n");
     int date_int = year * 10000 + month * 100 + day;
     //std::cout << "date_int: " << date_int << std::endl;
     _database[date_int] = float_num;
@@ -179,6 +192,29 @@ bool  BitcoinExchange::IsWordValid(std::string &word, int &i)
                 return (false);
             break;
         case 2 :
+            long unsigned int i = 0;
+            if(word[i] == '0')
+            {   
+                while (word[i] == '0')
+                {
+                    if(isdigit(word[++i]) && word[i] != '0')
+                    {
+                        std::cout << "Error: bad input => " + word << std::endl;
+                        return (false);
+                    }
+                }
+            }
+            int dotCount = 0;
+            for(i = 0; i < word.length(); i++)
+            {   
+                if(word[i] == '.')
+                    dotCount++;
+                if((!isdigit(word[i]) && word[i] != '.') || dotCount > 1)
+                {
+                    std::cout << "Error: bad input => " + word << std::endl;
+                    return (false);
+                }                   
+            }
             std::istringstream iss(word);
             if(!(iss >> float_num))
             {
