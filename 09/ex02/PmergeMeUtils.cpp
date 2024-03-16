@@ -23,13 +23,13 @@ void PmergeMe::_createArray(char** av)
             throw std::invalid_argument("invalid argument. Argument is out of limits: [" + std::string(av[i]) + "].");
         _array[i-1] = temp;        
     }
-    if(VERBOSE)
-    {   
-        std::cout << CYAN << "[verbose] Input array: \t\t[ ";
-        for (int i = 0; i < _size; i++)
-            std::cout << _array[i] << " ";
-        std::cout << "]"<< RESET << std::endl;
-    }
+    // if(VERBOSE)
+    // {   
+    //     std::cout << CYAN << "[verbose] Input array: \t\t[ ";
+    //     for (int i = 0; i < _size; i++)
+    //         std::cout << _array[i] << " ";
+    //     std::cout << "]"<< RESET << std::endl;
+    // }
 }
 
 
@@ -42,11 +42,13 @@ void PmergeMe::_checkVectorForDuplicates()
 }
 
 
-bool PmergeMe::_isVectorSorted()
+bool PmergeMe::_isVectorSorted(std::vector<int> vektor)
 {
-    for(std::vector<int>::iterator it = _vektor.begin(); it != _vektor.end()-1; it++)
+    for(std::vector<int>::iterator it = vektor.begin(); it != vektor.end()-1; it++)
         if (*it > *(it+1))
             return false;
+    if(VERBOSE)
+        std::cout << CYAN << "[verbose] Vector is already sorted." << RESET << std::endl;
     return true;
 }
 
@@ -59,26 +61,34 @@ void PmergeMe::_checkForStraggler()
         _vektor.pop_back();    
     }
     if(VERBOSE)
-        std::cout << CYAN << "[verbose] Straggler: \t\t[" << _straggler << "]" << RESET << std::endl;
+    {
+        std::cout << CYAN << "[verbose] Straggler exists: \t\t[" << _isStraggler << "]" << RESET << std::endl;
+        std::cout << CYAN << "[verbose] Straggler: \t\t\t[" << _straggler << "]" << RESET << std::endl;
+    }
 }
 
 
-void PmergeMe::_createVectorOfPairs()
+/* merge */
+
+void PmergeMe::_merge(std::vector<int> vektor)
 {
-    _pairs = new std::vector<std::pair<int, int> >;
-    for(std::vector<int>::iterator it = _vektor.begin(); it != _vektor.end(); it +=2)
+    if(vektor.size() <= 2)
     {
-        if(*it < *(it+1))
-            _pairs->push_back(std::make_pair(*it, *(it+1)));
+        if(vektor[0] < vektor[1])
+            _pairs->push_back(std::make_pair(vektor[0], vektor[1]));
         else
-            _pairs->push_back(std::make_pair(*(it+1), *it));
+            _pairs->push_back(std::make_pair(vektor[1], vektor[0]));
+        return;
     }
-    if(VERBOSE)
-    {   
-        std::cout << CYAN << "[verbose] Vector of pairs: \t[ ";
-        for (std::vector<std::pair<int, int> >::iterator it = _pairs->begin(); it != _pairs->end(); it++)
-            std::cout << "{" << it->first << ", " << it->second << "} ";
-        std::cout << "]" << RESET << std::endl;
+    long long median = vektor.size() / 2;
+    std::vector<int> left(vektor.begin(), vektor.begin() + median);
+    std::vector<int> right(vektor.begin() + median, vektor.end());
+    if(left.size() % 2 != 0)
+    {
+        right.push_back(left[0]);
+        left.erase(left.begin());
     }
+    _merge(left);
+    _merge(right);
 }
 

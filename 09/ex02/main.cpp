@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:11:28 by aputiev           #+#    #+#             */
-/*   Updated: 2024/03/15 09:06:01 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/03/15 14:00:30 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main (int ac, char **av)
 {
     if (ac <= 2)
     {
-        std::cerr << RED << "Error: no input." << RESET << std::endl;
+        std::cerr << RED << "Error: no input or input less than 2 arguments." << RESET << std::endl;
         return (1);
     }
     try
