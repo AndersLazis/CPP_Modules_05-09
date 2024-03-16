@@ -38,11 +38,31 @@ void PmergeMe::_checkVectorForDuplicates()
                 throw std::invalid_argument("invalid argument. Duplicate has been found");
 }
 
+void PmergeMe::_checkListForDuplicates()
+{   
+    std::list<int>::iterator it = _list.begin();
+    std::list<int>::iterator it2 = it;
+    ++it2;
+    for(; it != _list.end(); it++)
+        for(; it2 != _list.end(); it2++)
+            if (*it == *it2)
+                throw std::invalid_argument("invalid argument. Duplicate has been found");
+}
 
 bool PmergeMe::_isVectorSorted(std::vector<int>* vektor)
 {
     for(std::vector<int>::iterator it = vektor->begin(); it != vektor->end()-1; it++)
         if (*it > *(it+1))
+            return false;
+    if(VERBOSE)
+        std::cout << CYAN << "[verbose] Vector is already sorted." << RESET << std::endl;
+    return true;
+}
+
+bool PmergeMe::_isListSorted(std::list<int>* list)
+{
+    for(std::list<int>::iterator it = list->begin(); it != std::prev(list->end()); it++)
+        if (*it > *(std::next(it)))
             return false;
     if(VERBOSE)
         std::cout << CYAN << "[verbose] Vector is already sorted." << RESET << std::endl;
@@ -64,6 +84,20 @@ void PmergeMe::_checkForStraggler()
     }
 }
 
+void PmergeMe::_checkForStraggler()
+{
+    if(_size % 2 != 0)
+    {
+        _isStraggler = true;
+        _straggler = _list.back();
+        _list.pop_back();    
+    }
+    if(VERBOSE)
+    {
+        std::cout << CYAN << "[verbose] Straggler exists: \t\t[" << _isStraggler << "]" << RESET << std::endl;
+        std::cout << CYAN << "[verbose] Straggler: \t\t\t[" << _straggler << "]" << RESET << std::endl;
+    }
+}
 
 /* merge */
 

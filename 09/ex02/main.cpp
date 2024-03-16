@@ -6,7 +6,7 @@
 /*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:11:28 by aputiev           #+#    #+#             */
-/*   Updated: 2024/03/15 14:00:30 by aputiev          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:50:46 by aputiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,16 @@ int main (int ac, char **av)
     {   
         PmergeMe instance(ac, av);
         instance.processVector();
-        //instance.processList();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << RED << "Error: " << e.what() << RESET << '\n';
+        return (1);
+    }    
+    try
+    {   
+        PmergeMe instance(ac, av);
+        instance.processList();
     }
     catch(const std::exception& e)
     {
