@@ -22,14 +22,11 @@ void PmergeMe::_createArray(char** av)
         if (temp > INT_MAX || temp < 0)
             throw std::invalid_argument("invalid argument. Argument is out of limits: [" + std::string(av[i]) + "].");
         _array[i-1] = temp;        
-    }
-    // if(VERBOSE)
-    // {   
-    //     std::cout << CYAN << "[verbose] Input array: \t\t[ ";
-    //     for (int i = 0; i < _size; i++)
-    //         std::cout << _array[i] << " ";
-    //     std::cout << "]"<< RESET << std::endl;
-    // }
+    }  
+    std::cout << CYAN << "[verbose] Input array: \t\t\t[ ";
+    for (int i = 0; i < _size; i++)
+        std::cout << _array[i] << " ";
+    std::cout << "]"<< RESET << std::endl;
 }
 
 
@@ -42,9 +39,9 @@ void PmergeMe::_checkVectorForDuplicates()
 }
 
 
-bool PmergeMe::_isVectorSorted(std::vector<int> vektor)
+bool PmergeMe::_isVectorSorted(std::vector<int>* vektor)
 {
-    for(std::vector<int>::iterator it = vektor.begin(); it != vektor.end()-1; it++)
+    for(std::vector<int>::iterator it = vektor->begin(); it != vektor->end()-1; it++)
         if (*it > *(it+1))
             return false;
     if(VERBOSE)
@@ -92,3 +89,13 @@ void PmergeMe::_merge(std::vector<int> vektor)
     _merge(right);
 }
 
+void PmergeMe::printTime(std::clock_t time, int range)
+{
+	double clock_per_ms = static_cast<double>(CLOCKS_PER_SEC) / 1000;
+	double timeInMs = time / clock_per_ms;
+
+	std::cout << "Time to process a range of " << range << " numbers: " << time << " clock ticks (";
+	std::cout << std::fixed;
+	std::cout.precision( 6 );
+	std::cout << timeInMs << " ms)" << std::endl;
+}
