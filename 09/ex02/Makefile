@@ -6,11 +6,11 @@
 #    By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/20 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/03/17 17:43:02 by aputiev          ###   ########.fr        #
+#    Updated: 2024/03/17 18:48:25 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= pmergeMe
+NAME		= PmergeMe
 
 CC			= c++
 CPP_FLAGS	= -Wall  -Wextra -Werror -g -std=c++98
@@ -27,7 +27,6 @@ OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
 
 
 all: $(OBJ_PATH) $(NAME)
-		./$(NAME) 3 2 1 4 6 5
 
 $(NAME): $(OBJS)
 	$(CC) $(CPP_FLAGS) $(OBJS) -o $@

@@ -1,5 +1,5 @@
 
-#include <iterator>
+
 #include "includes/PmergeMe.hpp"
 
 void PmergeMe::_createArray(char** av)
@@ -162,13 +162,26 @@ void PmergeMe::_merge(std::list<int> list)
     _merge(right);
 }
 
+// void PmergeMe::printTime(std::clock_t time, int range)
+// {
+// 	double clock_per_ms = static_cast<double>(CLOCKS_PER_SEC) / 1000;
+// 	double timeInMs = time / clock_per_ms;
+
+// 	std::cout << "Time to process a range of " << range << " numbers: " << time << " clock ticks (";
+// 	std::cout << std::fixed;
+// 	std::cout.precision( 6 );
+// 	std::cout << timeInMs << " ms)" << std::endl;
+// }
+
 void PmergeMe::printTime(std::clock_t time, int range)
 {
-	double clock_per_ms = static_cast<double>(CLOCKS_PER_SEC) / 1000;
-	double timeInMs = time / clock_per_ms;
+    double clock_per_ms = static_cast<double>(CLOCKS_PER_SEC) / 1000;
+    double timeInMs = time / clock_per_ms;
+    double timeInUs = timeInMs * 1000; // конвертация в микросекунды
 
-	std::cout << "Time to process a range of " << range << " numbers: " << time << " clock ticks (";
-	std::cout << std::fixed;
-	std::cout.precision( 6 );
-	std::cout << timeInMs << " ms)" << std::endl;
+    std::cout << "Time to process a range of " << range << " numbers: " << time << " clock ticks (";
+    std::cout << std::fixed;
+    std::cout.precision(6);
+    std::cout << timeInMs << " ms, ";
+    std::cout << timeInUs << " us)" << std::endl;
 }

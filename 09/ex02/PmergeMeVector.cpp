@@ -41,8 +41,8 @@ void PmergeMe::_createVector()
 {
     for(int i = 0; i < _size; i++)
         _vektor.push_back(_array[i]);
-    //delete [] _array;
-    //_array = NULL;
+    delete [] _array;
+    _array = NULL;
 }
 
 std::vector<int>* PmergeMe::_sortVector()

@@ -28,8 +28,7 @@ void PmergeMe::processList()
                 sortedListPtr = NULL;            
             }
         }
-         printTime(ListTime, _size);
-    //(void)sortedListPtr; //FIXME: remove this line
+        printTime(ListTime, _size);
     }
     else
     {
