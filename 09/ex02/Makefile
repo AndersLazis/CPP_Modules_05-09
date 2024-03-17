@@ -6,7 +6,7 @@
 #    By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/20 20:51:04 by aputiev           #+#    #+#              #
-#    Updated: 2024/03/16 18:38:05 by aputiev          ###   ########.fr        #
+#    Updated: 2024/03/17 17:43:02 by aputiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,11 @@ NAME		= pmergeMe
 CC			= c++
 CPP_FLAGS	= -Wall  -Wextra -Werror -g -std=c++98
 
-SRC			=	main.cpp PmergeMe.cpp PmergeMeUtils.cpp PmergeMeVector.cpp PmergeMeList.cpp
+SRC			=	main.cpp \
+				PmergeMe.cpp \
+				PmergeMeUtils.cpp \
+				PmergeMeVector.cpp \
+				PmergeMeList.cpp
 
 OBJ			= $(SRC:.cpp=.o)
 OBJ_PATH	= ./objects/

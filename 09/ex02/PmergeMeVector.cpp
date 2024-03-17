@@ -87,7 +87,8 @@ std::vector<int>* PmergeMe::_createSortedsequence()
             std::cout << *it << " ";
         std::cout << "]" << RESET << std::endl;
     }
-    std::vector<int> indexSequence = _createIndexInsertSequence(unsorted);
+
+    std::vector<int> indexSequence = _createIndexInsertSequence(unsorted.size());
     for (std::vector<int>::iterator itr = indexSequence.begin(); itr != indexSequence.end(); itr++)
     {
         int number = unsorted[*itr-1];
@@ -119,10 +120,9 @@ void PmergeMe::_insertWithbinarySearch(std::vector<int>* sorted, int number)
 
 
 
-std::vector<int> PmergeMe::_createIndexInsertSequence(std::vector<int> unsorted)
+std::vector<int> PmergeMe::_createIndexInsertSequence(long long size)
 {
     bool previousIsJacobNumber = false;
-    long long size = unsorted.size();
     std::vector<int> indexSequence;
     long long lastJacobNumber = 1;
     long long currentJacobNumber = 1;

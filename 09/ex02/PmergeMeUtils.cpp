@@ -1,5 +1,5 @@
 
-
+#include <iterator>
 #include "includes/PmergeMe.hpp"
 
 void PmergeMe::_createArray(char** av)
@@ -59,13 +59,20 @@ bool PmergeMe::_isVectorSorted(std::vector<int>* vektor)
     return true;
 }
 
+
 bool PmergeMe::_isListSorted(std::list<int>* list)
 {
-    for(std::list<int>::iterator it = list->begin(); it != std::prev(list->end()); it++)
-        if (*it > *(std::next(it)))
+    std::list<int>::iterator it = list->begin();
+    std::list<int>::iterator next_it = it;
+    next_it++;
+
+    for (; next_it != list->end(); it++, next_it++)
+    {
+        if (*it > *next_it)
             return false;
+    }
     if(VERBOSE)
-        std::cout << CYAN << "[verbose] Vector is already sorted." << RESET << std::endl;
+        std::cout << CYAN << "[verbose] List is already sorted." << RESET << std::endl;
     return true;
 }
 
@@ -84,7 +91,7 @@ void PmergeMe::_checkForStraggler()
     }
 }
 
-void PmergeMe::_checkForStraggler()
+void PmergeMe::_checkListForStraggler()
 {
     if(_size % 2 != 0)
     {
@@ -120,6 +127,38 @@ void PmergeMe::_merge(std::vector<int> vektor)
         left.erase(left.begin());
     }
     _merge(left);
+    _merge(right);
+}
+
+void PmergeMe::_merge(std::list<int> list)
+{
+    
+    if(list.size() <= 2)
+    {
+        if(*(list.begin()) < *(++list.begin()))
+            _list_pairs->push_back(std::make_pair(*(list.begin()), *(++list.begin())));
+        else
+            _list_pairs->push_back(std::make_pair(*(++list.begin()), *(list.begin())));
+        return;
+    }
+    std::list<int>::iterator median_it = list.begin();
+    std::advance(median_it, (list.size() / 2));
+
+    std::list<int> right;
+    right.splice(right.begin(), list, median_it, list.end());
+    if(list.size() % 2 != 0)
+    {
+        right.push_back(list.front());
+        list.pop_front();
+    }
+
+    // for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
+    //     std::cout << *it << " ";
+    // std::cout << std::endl;
+    // for (std::list<int>::iterator it = right.begin(); it != right.end(); it++)
+    //     std::cout << *it << " ";
+    // std::cout << std::endl;
+    _merge(list);
     _merge(right);
 }
 

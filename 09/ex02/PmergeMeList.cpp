@@ -6,35 +6,36 @@ void PmergeMe::processList()
 {   
     std::cout << YELLOW << " ==================== * Processing List... * ==================== " << RESET << std::endl;
     std::clock_t ListStartTime = std::clock();
-    _createList();    
+    _createList();
     _checkListForDuplicates();
    
-    // if(!_isListSorted(&_list))
-    // {           
-    //     std::vector<int>* sortedListPtr = _sortList();
-    //     std::clock_t ListTime = std::clock() - ListStartTime;
+    if(!_isListSorted(&_list))
+    {           
+         std::list<int>* sortedListPtr = _sortList();
+         std::clock_t ListTime = std::clock() - ListStartTime;
         
-    //     std::cout << GREEN << "\nSorted sequence: \t\t\t[ ";
-    //     for (std::vector<int>::iterator it = sortedListPtr->begin(); it != sortedListPtr->end(); it++)
-    //         std::cout << *it << " ";
-    //     std::cout << "]\n" << RESET << std::endl; 
-    //     if(VERBOSE)
-    //     { 
-    //         std::cout << CYAN <<"[verbose] size of sorted vector: "<< sortedListPtr->size() << RESET << std::endl;
-    //         std::cout <<  std::endl << GREEN << "[verbose] [check] is vector correctly sorted: " << _isVectorSorted(sortedVectorPtr) << RESET << std::endl;
-    //         if(sortedVectorPtr)
-    //         {
-    //             delete sortedVectorPtr;
-    //             sortedVectorPtr = NULL;            
-    //         }
-    //     }
-    //     printTime(ListTime, _size);
-    // }
-    // else
-    // {
-    //     std::clock_t ListTime = std::clock() - ListStartTime;
-    //     printTime(ListTime, _size);
-    // }
+         std::cout << GREEN << "\nSorted sequence: \t\t\t[ ";
+         for (std::list<int>::iterator it = sortedListPtr->begin(); it != sortedListPtr->end(); it++)
+             std::cout << *it << " ";
+         std::cout << "]\n" << RESET << std::endl; 
+         if(VERBOSE)
+        { 
+            std::cout << CYAN <<"[verbose] size of sorted List: "<< sortedListPtr->size() << RESET << std::endl;
+            std::cout <<  std::endl << GREEN << "[verbose] [check] is List correctly sorted: " << _isListSorted(sortedListPtr) << RESET << std::endl;
+            if(sortedListPtr)
+            {
+                delete sortedListPtr;
+                sortedListPtr = NULL;            
+            }
+        }
+         printTime(ListTime, _size);
+    //(void)sortedListPtr; //FIXME: remove this line
+    }
+    else
+    {
+         std::clock_t ListTime = std::clock() - ListStartTime;
+         printTime(ListTime, _size);
+    }
 }
 
 void PmergeMe::_createList()
@@ -45,32 +46,31 @@ void PmergeMe::_createList()
     _array = NULL;
 }
 
-std::vector<int>* PmergeMe::_sortList()
+std::list<int>* PmergeMe::_sortList()
 {   
-    //_createVectorOfPairs();
-    _checkForStraggler();
-    // _pairs = new std::vector<std::pair<int, int> >;
-    // _merge(_list);
-    // if(VERBOSE)
-    // {   
-    //     std::cout << CYAN << "[verbose] Unsorted vector of pairs: \t[ ";
-    //     for (std::vector<std::pair<int, int> >::iterator it = _pairs->begin(); it != _pairs->end(); it++)
-    //         std::cout << "{" << it->first << ", " << it->second << "} ";
-    //     std::cout << "]" << RESET << std::endl ;
-    // }
-    // _sortVectorOfPairs();
-    // std::vector<int>* sortedVectorPtr = _createSortedsequence();
-    // return sortedVectorPtr;
-    return NULL;
+    //_createListOfPairs();
+    _checkListForStraggler();
+    _list_pairs = new std::list<std::pair<int, int> >;
+    _merge(_list);
+    if(VERBOSE)
+    {   
+        std::cout << CYAN << "[verbose] Unsorted list of pairs: \t[ ";
+        for (std::list<std::pair<int, int> >::iterator it = _list_pairs->begin(); it != _list_pairs->end(); it++)
+            std::cout << "{" << it->first << ", " << it->second << "} ";
+        std::cout << "]" << RESET << std::endl ;
+    }
+    _sortListOfPairs();
+    std::list<int>* sortedVectorPtr = _createListSortedsequence();
+    return sortedVectorPtr;
 }
 
 
 
-std::vector<int>* PmergeMe::_createSortedsequence()
+std::list<int>* PmergeMe::_createListSortedsequence()
 {
-    std::vector <int>* sorted = new std::vector<int>;
-    sorted->push_back(_pairs->front().first);
-    for (std::vector<std::pair<int, int> >::iterator it = _pairs->begin(); it != _pairs->end(); it++)
+    std::list <int>* sorted = new std::list<int>;
+    sorted->push_back(_list_pairs->front().first);
+    for (std::list<std::pair<int, int> >::iterator it = _list_pairs->begin(); it != _list_pairs->end(); it++)
         sorted->push_back(it->second);
     if(sorted->size() == 2)
     {
@@ -78,20 +78,25 @@ std::vector<int>* PmergeMe::_createSortedsequence()
             _insertWithbinarySearch(sorted, _straggler);
         return sorted;
     }
-    std::vector<int> unsorted;
-    for (std::vector<std::pair<int, int> >::iterator it = _pairs->begin() + 1; it != _pairs->end(); it++)
-        unsorted.push_back(it->first);
+    std::list<int> unsorted;
+    std::list<std::pair<int, int> >::iterator itm = _list_pairs->begin();
+    itm++;
+    for (; itm != _list_pairs->end(); itm++)
+        unsorted.push_back(itm->first);
+
     if(VERBOSE)
     {   
         std::cout << CYAN << "[verbose] Unsorted sequence: \t\t[ ";
-        for (std::vector<int>::iterator it = unsorted.begin(); it != unsorted.end(); it++)
+        for (std::list<int>::iterator it = unsorted.begin(); it != unsorted.end(); it++)
             std::cout << *it << " ";
         std::cout << "]" << RESET << std::endl;
     }
-    std::vector<int> indexSequence = _createIndexInsertSequence(unsorted);
+    std::vector<int> indexSequence = _createIndexInsertSequence(unsorted.size());
     for (std::vector<int>::iterator itr = indexSequence.begin(); itr != indexSequence.end(); itr++)
-    {
-        int number = unsorted[*itr-1];
+    {   
+        std::list<int>::iterator its = unsorted.begin();
+        std::advance(its, *itr-1);
+        int number = *its;
         _insertWithbinarySearch(sorted, number);
     }
     if(_isStraggler)
@@ -100,153 +105,98 @@ std::vector<int>* PmergeMe::_createSortedsequence()
 }
 
 
-void PmergeMe::_insertWithbinarySearch(std::vector<int>* sorted, int number)
+void PmergeMe::_insertWithbinarySearch(std::list<int>* sorted, int number)
 {
+   
     long long mid = 0;
     long long leftLimit = 0;
     long long rightLimit = sorted->size();
     while (leftLimit < rightLimit)
     {
         mid = (leftLimit + rightLimit) / 2;
-        if (number < ((*sorted)[mid]))
+        std::list<int>::iterator it = sorted->begin();
+        std::advance(it, mid);
+
+
+
+        if (number < (*it))
             rightLimit = mid;
         else
             leftLimit = mid + 1;
     }
-
-    sorted->insert(sorted->begin() + leftLimit, number);
+    std::list<int>::iterator itr = sorted->begin();
+    std::advance(itr, leftLimit);
+    sorted->insert(itr, number);
 }
 
 
-
-
-std::vector<int> PmergeMe::_createIndexInsertSequence(std::vector<int> unsorted)
-{
-    bool previousIsJacobNumber = false;
-    long long size = unsorted.size();
-    std::vector<int> indexSequence;
-    long long lastJacobNumber = 1;
-    long long currentJacobNumber = 1;
-    long long reverseIndex = 0;
-    long long index = 2;
-
-    indexSequence.push_back(1);
-    if(size == 1)
-        return indexSequence;
-    
-    std::vector<int> JacobSequence = _createJacobSequence(size);
-    if(VERBOSE)
-    {   
-        std::cout << CYAN << "[verbose] Jacob sequence: \t\t[ ";
-        for (std::vector<int>::iterator it = JacobSequence.begin(); it != JacobSequence.end(); it++)
-            std::cout << *it << " ";
-        std::cout << "]" << RESET << std::endl;
-    }
-
-    while( index <= size )
-    {
-        if(JacobSequence.size() != 0 && previousIsJacobNumber == false)
-        {
-            indexSequence.push_back(JacobSequence.front());
-            index++;
-            lastJacobNumber = currentJacobNumber;
-            currentJacobNumber = JacobSequence.front();
-            reverseIndex = currentJacobNumber - 1;
-            JacobSequence.erase(JacobSequence.begin());            
-            previousIsJacobNumber = true;            
-            continue;
-        }
-        else if(reverseIndex > lastJacobNumber)
-        {
-            while(reverseIndex > lastJacobNumber)
-            {
-                indexSequence.push_back(reverseIndex);
-                index++;
-                previousIsJacobNumber = false;
-                reverseIndex--;
-            }
-
-            lastJacobNumber = currentJacobNumber;
-        }
-        else if(JacobSequence.size() == 0 )
-        {
-            indexSequence.push_back(index);
-            index++;
-        }
-    }
-    if(VERBOSE)
-    {   
-        std::cout << CYAN << "[verbose] Index sequence: \t\t[ ";
-        for (std::vector<int>::iterator it = indexSequence.begin(); it != indexSequence.end(); it++)
-            std::cout << *it << " ";
-        std::cout << "]" << RESET << std::endl;
-    }
-    return indexSequence;
-}
-
-std::vector<int> PmergeMe::_createJacobSequence(long long size )
-{
-    std::vector<int> JacobSequence;
-    long long j = 3;
-    while( _getJacobNumber(j) < size - 1)
-    {
-        JacobSequence.push_back(_getJacobNumber(j));
-        j++;
-    }
-    return JacobSequence;
-}
-
-
-
-int PmergeMe::_getJacobNumber(int n)
-{
-	if (n == 0)
-		return 0 ;
-	if(n == 1)
-		return 1;
-	return ( _getJacobNumber( n - 1 ) + 2 * _getJacobNumber( n - 2 ) );
-}
-
-
-
-// void PmergeMe::_sortVectorOfPairs()
-// {   
-//     for (std::vector<std::pair<int, int> >::iterator it = _pairs->begin(); it != _pairs->end(); it++)
+// std::vector<int> PmergeMe::_createJacobSequence(long long size )
+// {
+//     std::vector<int> JacobSequence;
+//     long long j = 3;
+//     while( _getJacobNumber(j) < size - 1)
 //     {
-//         std::pair<int, int> temp  = *it;
-//         std::vector<std::pair<int, int> >::iterator itr = it;
-
-//         if (itr == _pairs->begin())
-//             continue;
-        
-//         while(temp.second < ((--itr)->second) && itr != _pairs->begin())
-//         {
-//             --itr;
-//         }
-//         _pairs->erase(it);
-//         _pairs->insert(itr, temp);
-//         it = itr;        
+//         JacobSequence.push_back(_getJacobNumber(j));
+//         j++;
 //     }
+//     return JacobSequence;
 // }
 
-void PmergeMe::_sortVectorOfPairs()
-{
-  for (std::vector<std::pair<int, int> >::iterator  it = (_pairs->begin()+1); it != _pairs->end(); ++it) {
-    std::pair<int, int>  temp = *it;
-    std::vector<std::pair<int, int> >::iterator  itr = it - 1;
+
+
+// int PmergeMe::_getJacobNumber(int n)
+// {
+// 	if (n == 0)
+// 		return 0 ;
+// 	if(n == 1)
+// 		return 1;
+// 	return ( _getJacobNumber( n - 1 ) + 2 * _getJacobNumber( n - 2 ) );
+// }
+
+
+
+
+void PmergeMe::_sortListOfPairs()
+{  
+    int i = 1;
+    std::list<std::pair<int, int> >::iterator  it_begin_next = _list_pairs->begin();
+    it_begin_next++;
+    for (std::list<std::pair<int, int> >::iterator  it = it_begin_next; it != _list_pairs->end(); ++it)
+    {
+        std::pair<int, int> temp = *it;
+        std::list<std::pair<int, int> >::iterator  itr = it;
+        --itr;
         
-    while(itr >= _pairs->begin() && ((itr->second) > temp.second))
-    {        
-        *(itr+1) = *itr;
-        itr--;
+        while(itr != _list_pairs->begin() && ((itr->second) > temp.second))
+        {
+            std::list<std::pair<int, int> >::iterator  itr_next = itr;
+            itr_next++;
+            *(itr_next) = *itr;
+            itr--;
+        }
+        if(itr == _list_pairs->begin() && ((itr->second) > temp.second))
+        {
+            std::list<std::pair<int, int> >::iterator  itr_next2 = itr;
+            itr_next2++;
+            *(itr_next2) = *itr;
+            *itr = temp;
+              
+        }
+        else
+        {
+            std::list<std::pair<int, int> >::iterator  itr_next3 = itr;
+            itr_next3++;
+            *(itr_next3) = temp;
+        }
+        
+        i++;
     }
-    *(itr+1) = temp;
-  }
     if(VERBOSE)
     {   
-        std::cout << CYAN << "[verbose] Sorted vector of pairs: \t[ ";
-        for (std::vector<std::pair<int, int> >::iterator it = _pairs->begin(); it != _pairs->end(); it++)
+        std::cout << CYAN << "[verbose] Sorted list of pairs: \t[ ";
+        for (std::list<std::pair<int, int> >::iterator it = _list_pairs->begin(); it != _list_pairs->end(); it++)
             std::cout << "{" << it->first << ", " << it->second << "} ";
         std::cout << "]" << RESET << std::endl;
     }
- }
+}
+
