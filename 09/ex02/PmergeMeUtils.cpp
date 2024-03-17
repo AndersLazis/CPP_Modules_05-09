@@ -108,7 +108,7 @@ void PmergeMe::_checkListForStraggler()
 
 /* merge */
 
-void PmergeMe::_merge(std::vector<int> vektor)
+void PmergeMe::_merge(std::vector<int> &vektor)
 {
     if(vektor.size() <= 2)
     {
@@ -130,7 +130,7 @@ void PmergeMe::_merge(std::vector<int> vektor)
     _merge(right);
 }
 
-void PmergeMe::_merge(std::list<int> list)
+void PmergeMe::_merge(std::list<int> &list)
 {
     
     if(list.size() <= 2)
@@ -177,11 +177,12 @@ void PmergeMe::printTime(std::clock_t time, int range)
 {
     double clock_per_ms = static_cast<double>(CLOCKS_PER_SEC) / 1000;
     double timeInMs = time / clock_per_ms;
-    double timeInUs = timeInMs * 1000; // конвертация в микросекунды
+    //double timeInUs = timeInMs * 1000;
 
     std::cout << "Time to process a range of " << range << " numbers: " << time << " clock ticks (";
     std::cout << std::fixed;
     std::cout.precision(6);
-    std::cout << timeInMs << " ms, ";
-    std::cout << timeInUs << " us)" << std::endl;
+    std::cout << timeInMs << " ms" 
+    << ")" << std::endl;
+    //std::cout << timeInUs << " us)" << std::endl;
 }

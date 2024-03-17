@@ -43,7 +43,7 @@ class PmergeMe
         std::vector<int>*   _sortVector();
         void                _checkForStraggler();
         void                _sortVectorOfPairs();
-        void                _merge(std::vector<int> vektor);
+        void                _merge(std::vector<int> &vektor);
         std::vector<int>*   _createSortedsequence();
         std::vector<int>    _createJacobSequence(long long size );
         int                 _getJacobNumber(int n);
@@ -57,7 +57,7 @@ class PmergeMe
         void                _checkListForStraggler();
         void                _createListOfPairs();
         void                _sortListOfPairs();
-        void                _merge(std::list<int> list);
+        void                _merge(std::list<int> &list);
         std::list<int>*     _createListSortedsequence();    
         void                _insertWithbinarySearch(std::list<int>* sorted, int number);
 
