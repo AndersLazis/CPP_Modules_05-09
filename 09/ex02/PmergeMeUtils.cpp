@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMeUtils.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputiev <aputiev@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/17 20:50:36 by aputiev           #+#    #+#             */
+/*   Updated: 2024/03/17 20:50:56 by aputiev          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #include "includes/PmergeMe.hpp"
@@ -151,27 +163,9 @@ void PmergeMe::_merge(std::list<int> &list)
         right.push_back(list.front());
         list.pop_front();
     }
-
-    // for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
-    //     std::cout << *it << " ";
-    // std::cout << std::endl;
-    // for (std::list<int>::iterator it = right.begin(); it != right.end(); it++)
-    //     std::cout << *it << " ";
-    // std::cout << std::endl;
     _merge(list);
     _merge(right);
 }
-
-// void PmergeMe::printTime(std::clock_t time, int range)
-// {
-// 	double clock_per_ms = static_cast<double>(CLOCKS_PER_SEC) / 1000;
-// 	double timeInMs = time / clock_per_ms;
-
-// 	std::cout << "Time to process a range of " << range << " numbers: " << time << " clock ticks (";
-// 	std::cout << std::fixed;
-// 	std::cout.precision( 6 );
-// 	std::cout << timeInMs << " ms)" << std::endl;
-// }
 
 void PmergeMe::printTime(std::clock_t time, int range)
 {
